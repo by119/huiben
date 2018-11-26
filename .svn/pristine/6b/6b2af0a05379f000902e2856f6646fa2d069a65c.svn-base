@@ -1,0 +1,18 @@
+
+const Trequest = require('../../static/js/request.js')
+Page({
+  data: {
+
+  },
+  onLoad: function (options) {
+    var that = this;
+    Trequest({
+      url: 'user_money_log/getlist',
+      data: {},
+      callback(res) {
+        console.log(res);
+      }
+
+    });
+  },
+})

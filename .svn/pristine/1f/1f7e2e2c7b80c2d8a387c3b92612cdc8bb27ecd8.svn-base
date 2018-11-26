@@ -1,0 +1,32 @@
+<!--pages/picturebook/picturebook.wxml-->
+<import src="../../wxParse/wxParse.wxml"></import>
+<view class='picturebook'>
+  <swiper circular="{{circular}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" bindchange="changeCurrent" current="{{current}}" interval="{{intervalTime}}">
+    <block wx:for="{{bookData}}" wx:key="index">
+      <swiper-item>
+        <image src="{{item.pic_url}}" class="slide-image" mode="scaleToFill" />
+          <scroll-view  class='rook-content' scroll-y="true">
+            <template is="wxParse" data="{{wxParseData: content.nodes}}"></template>
+            <view style='height:100rpx;'></view>
+          </scroll-view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class='foot-ctrl'>
+    <view class='circular'>
+      <icon bindtap='changeAutoplay' class='iconfont book-state icon-{{playicon}}-e'></icon>
+    </view>
+    <view class='page-num'>
+      <text>{{current+1}}</text>/
+      <text>{{count}}</text>
+    </view>
+    <view bindtap='prevFn' class='changepage prev {{prevGrey}}'>
+      <icon class='iconfont icon-prev'></icon>
+      <text>上一页</text>
+    </view>
+    <view bindtap='nextFn' class='changepage next {{nextGrey}}'>
+      <text>下一页</text>
+      <icon class='iconfont icon-next'></icon>
+    </view>
+  </view>
+</view>

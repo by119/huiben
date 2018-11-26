@@ -1,0 +1,63 @@
+//获取应用实例
+const app = getApp();
+const Trequest = require('../../static/js/request.js');
+
+Page({
+  data: {
+    userInfo: {},
+    expireTime: '',
+  },
+  onShow: function() {
+    var userInfo = wx.getStorageSync('user_info').data;
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=mine"
+      });
+      return false;
+    } else {
+      wx.login({
+        success: function(o) {
+          var n = o.code,
+            t = wx.getStorageSync("access_token");
+          wx.request({
+            url: 'https://huiben.fengsh.cn/api/user/wechatLoginMiniProgram',
+            method: "POST",
+            data: {
+              code: n,
+              encryptedData: t.detail.encryptedData,
+              iv: t.detail.iv,
+              headimgurl: t.detail.userInfo.avatarUrl,
+              nickname: t.detail.userInfo.nickName
+            },
+            success: function(e) {
+              if (200 == e.statusCode) {
+                wx.setStorageSync("access_token", t),
+                  wx.setStorageSync("user_info", e.data);
+              }
+            },
+            complete: function() {
+              wx.hideLoading();
+            }
+          });
+        },
+        fail: function(e) {
+
+        }
+      });
+      var expireTime = userInfo && userInfo.userVip && userInfo.userVip.expire_time ? userInfo.userVip.expire_time.split(' ')[0] : '';
+      this.setData({
+        userInfo: userInfo,
+        expireTime: expireTime
+      })
+    }
+  },
+  onLoad: function() {
+    var that = this,
+      userInfo = wx.getStorageSync('user_info');
+    if (userInfo) {
+      that.setData({
+        userInfo: userInfo.data
+      })
+    }
+  }
+})

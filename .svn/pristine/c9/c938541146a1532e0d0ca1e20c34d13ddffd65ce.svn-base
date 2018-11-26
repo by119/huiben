@@ -1,0 +1,345 @@
+const Trequest = require('../../static/js/request.js')
+var innerAudio = wx.createInnerAudioContext();
+Page({
+  data: {
+    seachVal: '',
+    currentTab: 0,
+    images: [],
+    swiperTab: [],
+    navList: [],
+    hotList: [],
+    vipList: [],
+    studyList2: [],
+    studyList3: [],
+    studyList4: [],
+    imgUrls: [],
+    //默认
+    current1: 0,
+    walkmanList: [],
+    // 音乐播放器
+    playicon: 'play',
+    audioPress: 0,
+    walkmanState: 'none',
+    walkmanImg: '',
+    walkmanPlay: {},
+    // 模态框显隐
+    modalState: false,
+    modalList: []
+
+  },
+  // 模态框控制
+  closeActModal: function() {
+    this.setData({
+      modalState: !this.data.modalState
+    })
+  },
+  onLoad: function(options) {
+    var that = this;
+    // 头部tab
+    Trequest({
+      url: 'goods_category/cates',
+      data: {},
+      callback(res) {
+        // console.log(res);
+        // that.cates(res.data[0].id);
+        var arr = [];
+        var len = res.data.length;
+        for (var i = 0; i < len; i++) {
+          arr.push(res.data[i]);
+        }
+        that.setData({
+          swiperTab: arr
+        })
+      }
+    });
+    // 首页分类  1：轮播图    2：广告标题  3：热门精品   4： 新会员专属区  5:首页广告弹窗
+    Trequest({
+      url: 'adv/getlist',
+      data: {
+        type: '1,2,3,4,5',
+        classified: 1
+      },
+      callback(res) {
+        that.setData({
+          imgUrls: res.data['1'],
+          navList: res.data['2'],
+          hotList: res.data['3'],
+          vipList: res.data['4']
+        })
+        if (res.data['5']) {
+          that.setData({
+            modalList: res.data['5'][0],
+            modalState: true
+          })
+        }
+      }
+    });
+
+
+    // 底部列表  2：视频   3： 听  4：读
+    Trequest({
+      url: 'goods/index',
+      data: {},
+      callback(res) {
+        // console.log(res,'底部列表');
+        that.setData({
+          studyList2: res.data[2],
+          studyList3: res.data[3],
+          studyList4: res.data[4]
+        })
+      }
+    });
+
+    // 广告分类
+    Trequest({
+      url: 'adv/getlist',
+      data: {
+        type: 2
+      },
+      callback(res) {
+        // console.log(res);
+      }
+    });
+    // 课程 随身听
+    Trequest({
+      url: 'goods/getlist',
+      data: {
+        id: 2
+      },
+      callback(res) {
+        // console.log(res);
+        that.setData({
+          walkmanImg: res.data.data[0].pic_url,
+          'walkmanList': res.data.data[0].goodsItem
+        })
+      }
+    });
+
+    // 音乐播放器
+    innerAudio.autoplay = false;
+    this.createAudio();
+
+  },
+
+  // 隐藏页面
+  onHide: function() {
+    // 关闭音频
+    // innerAudio.stop();
+    // 暂停音频
+    innerAudio.pause();
+    // 关闭广告弹窗
+
+    this.setData({
+      modalState: false
+    })
+  },
+  // 随身听列表选择播放
+  palyMusic: function(e) {
+    // console.log('选择播放');
+    innerAudio.destroy();
+    innerAudio = wx.createInnerAudioContext();
+    // 获取当前选择的音频信息
+    var dataset = e.currentTarget.dataset;
+    this.setData({
+      'walkmanPlay.poster': dataset.poster,
+      'walkmanPlay.name': dataset.name,
+      'walkmanPlay.src': dataset.src,
+      'walkmanPlay.time': '0:0',
+      'walkmanPlay.current': '0:0'
+    })
+    innerAudio.autoplay = true;
+    this.createAudio();
+    this.setData({
+      playicon: 'playing',
+      walkmanState: 'block'
+    })
+    innerAudio.play();
+  },
+  // 随身听播放控制
+  _iconPlay: function () {
+    if (this.data.walkmanPlay.playicon == "play") {
+      innerAudio.play();
+      this.setData({
+        'walkmanPlay.playicon': 'playing'
+      })
+    } else {
+      innerAudio.pause();
+      this.setData({
+        'walkmanPlay.playicon': 'play'
+      })
+    }
+  },
+  // 关闭停止随身听
+  _iconStop: function () {
+    // console.log('关闭')
+    innerAudio.stop();
+    this.setData({
+      'walkmanPlay.walkmanState': 'none'
+    })
+  },
+  toSearch: function() {
+    wx.navigateTo({
+      url: '/pages/search/search',
+    })
+  },
+  //点击切换
+  clickTab: function(e) {
+    var that = this;
+    if (this.data.currentTab === e.target.dataset.current) {
+      return false;
+    } else {
+      that.setData({
+        currentTab: e.target.dataset.current
+      })
+    }
+
+  },
+  changeIndicatorDots: function(e) {
+    this.setData({
+      indicatorDots: !this.data.indicatorDots
+    })
+  },
+  intervalChange: function(e) {
+    this.setData({
+      interval: e.detail.value
+    })
+  },
+  durationChange: function(e) {
+    this.setData({
+      duration: e.detail.value
+    })
+  },
+  // tab左右切换事件
+  bindchange: function(e) {
+    this.setData({
+      current1: e.detail.current
+    })
+  },
+  // cates: function(id) {
+  //   var that = this;
+  //   Trequest({
+  //     url: 'goods_category/cates',
+  //     data: {
+  //       id: id
+  //     },
+  //     callback(res) {
+  //       var arr = [];
+  //       for (var i = 0; i < res.data.length; i++) {
+  //         arr.push(res.data[i]);
+  //       }
+  //       that.setData({
+  //         navList: arr
+  //       })
+  //     }
+  //   });
+  // },
+  createAudio: function() {
+    innerAudio.src = this.data.walkmanPlay.src;
+    innerAudio.onCanplay(() => {
+      // console.log('进入可以播放状态');
+      this.setData({
+        'walkmanPlay.time': this.convertTime(innerAudio.duration),
+        'walkmanPlay.current': this.convertTime(innerAudio.currentTime)
+      })
+    })
+    innerAudio.onPlay(() => {
+      // console.log('开始播放');
+      this.setData({
+        playicon: 'playing',
+        'walkmanPlay.time': this.convertTime(innerAudio.duration),
+        'walkmanPlay.current': this.convertTime(innerAudio.currentTime)
+      })
+    })
+    innerAudio.onTimeUpdate(() => {
+      // console.log('正在播放');
+      this.setData({
+        'walkmanPlay.time': this.convertTime(innerAudio.duration),
+        'walkmanPlay.current': this.convertTime(innerAudio.currentTime),
+        audioPress: Math.ceil(innerAudio.currentTime / innerAudio.duration * 100)
+      })
+    })
+    innerAudio.onPause(() => {
+      // console.log('暂停播放');
+      this.setData({
+        playicon: 'play'
+      })
+    })
+    innerAudio.onStop(() => {
+      // console.log('停止播放');
+      this.setData({
+        walkmanState: 'none'
+      })
+      //停止播放，销毁该实例
+      innerAudio.destroy();
+    })
+    innerAudio.onEnded(() => {
+      // console.log('录音播放结束');
+      this.setData({
+        playicon: 'play'
+      });
+      //播放结束，销毁该实例
+      innerAudio.destroy();
+    })
+
+    innerAudio.onError((res) => {
+      console.log(res.errMsg);
+      console.log(res.errCode);
+      innerAudio.destroy();
+    })
+  },
+
+  imageLoad: function(e) {
+    var $width = e.detail.width, //获取图片真实宽度
+      $height = e.detail.height,
+      ratio = $width / $height; //图片的真实宽高比例
+    //图片需要宽度
+    var w;
+    if (e.currentTarget.dataset.w) {
+      w = Math.ceil(e.currentTarget.dataset.w);
+    } else {
+      w = $width
+    }
+    var viewWidth = w, //设置图片显示宽度
+      viewHeight = w / ratio; //计算的高度值
+    var image = this.data.images;
+    //将图片的datadata-index作为image对象的key,然后存储图片的宽高值
+    image[e.target.dataset.index] = {
+      width: viewWidth,
+      height: viewHeight,
+    }
+    this.setData({
+      images: image
+    })
+  },
+  convertTime: function(a) {
+    var second = Math.floor(a % 60); //计算秒
+    var minite = Math.floor((a / 60) % 60); //计算分
+    var hour = Math.floor((a / 3600) % 24); //计算小时
+    var day = Math.floor((a / 3600) / 24);
+    var str = '';
+    if (day) {
+      day = day.toString() + ':';
+    } else {
+      day = '';
+    }
+    if (hour) {
+      hour = hour.toString() + ':';
+    } else if (day) {
+      hour = '0:';
+    } else {
+      hour = '';
+    }
+    if (minite) {
+      minite = minite.toString() + ':';
+    } else {
+      minite = '0:';
+    }
+    if (second) {
+      second = second.toString();
+    } else {
+      second = '0';
+    }
+    str = day + hour + minite + second;
+    return str;
+  }
+})

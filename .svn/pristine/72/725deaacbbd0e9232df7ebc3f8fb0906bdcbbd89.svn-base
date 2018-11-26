@@ -1,0 +1,23 @@
+<view class='share-record container'>
+  <block wx:if="{{!recordList&&recordList.length}}">
+    <view wx:for="{{recordList}}" wx:key="index" class='record-list clearfix'>
+      <view class='record-title'>
+        <view style='float:left'>
+          推广人：
+          <text>{{item.user.nickname}}</text>
+        </view>
+        <view style='float:right'>
+          推广人号码：
+          <text>{{item.user.tel}}</text>
+        </view>
+      </view>
+      <view class='record-title'>
+        推广时间：
+        <text style='float:right'>{{item.create_time}}</text>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <list-null></list-null>
+  </block>
+</view>

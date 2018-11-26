@@ -1,0 +1,50 @@
+/* components/list/list.wxss */
+
+.list-news {
+  width: 630rpx;
+  background-color: #fff;
+  border-radius: 15rpx;
+  box-shadow: 0 8rpx 15rpx #838383;
+  padding: 30rpx;
+  margin: 0 auto 30rpx;
+}
+
+.list-news image {
+  width: 200rpx;
+  height: 150rpx;
+  border-radius: 20rpx;
+  display: inline-block;
+   vertical-align: bottom; 
+}
+
+.list-content {
+  width: 400rpx;
+  display: inline-block;
+  text-align: left;
+  margin-left: 30rpx;
+}
+
+.list-title {
+  color: #333;
+  font-size: 32rpx;
+  font-weight: 700;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.list-explain {
+  color: #d5d5d5;
+  font-size: 26rpx;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.list-time {
+  color: #9b9b9b;
+  font-size: 24rpx;
+  display: block;
+}

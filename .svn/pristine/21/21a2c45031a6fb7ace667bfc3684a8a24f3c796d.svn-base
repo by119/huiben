@@ -1,0 +1,171 @@
+const Trequest = require('../../static/js/request.js')
+Page({
+  data: {
+    pageUrl: '/pages/video/video',
+    collectData: [],
+    bgImg: '',
+    params: {}, //请求列表的参数
+    numPerPage: 10, //设置默认一次加载数据条数
+    pageNum: 1, // 设置加载的第几次，默认是第一次
+    hasMore: true, // “加载更多”
+    ifLoad: false,
+    total: 0, // regardData数组（最近学习记录）的条数
+    isEnglish:false
+  },
+  onLoad: function(options) {
+    // console.log(options,'wewe');
+
+    if (options.title) {
+      params = {
+        title: options.title
+      };
+      // this.lessonList({ title: options.title });
+      wx.setNavigationBarTitle({
+        title: options.title
+      })
+    } else {
+      wx.setNavigationBarTitle({
+        title: '课程列表'
+      })
+    }
+    var params = {};
+    var that = this;
+    if (options.category_id == 4) {
+      // category_id = 4 英文阅读
+      wx.setNavigationBarTitle({
+        title: '英文阅读'
+      })
+      that.setData({
+        isEnglish:true
+      })
+    }
+    if (options.subject_id) {
+      // 列表接口   subject_id：视听读列表    title：搜索    gc_id：固定课程
+      // 视频学习 subject_id=2
+      // 音频学习 subject_id=3
+      // 绘本学习 subject_id=4
+      params = {
+        subject_id: options.subject_id
+      };
+      // this.lessonList({ subject_id: options.subject_id });
+    }
+    if (options.gc_id) {
+      params = {
+        gc_id: options.gc_id
+      };
+      // this.lessonList({ gc_id: options.gc_id });
+      //少儿  gc_id=2   type 6
+      if (options.gc_id == 2) {
+        Trequest({
+          url: 'adv/getlist',
+          data: {
+            type: '6',
+            classified: 1
+          },
+          callback(res) {
+            that.setData({
+              bgImg: res.data['6'][0].pic_url
+            })
+          }
+        });
+      }
+    }
+    that.setData({
+      params: params
+    })
+    that.data.isEnglish ? that.englishList(params) : that.lessonList(params);
+  },
+  englishList:function(temp){
+    temp.category_id = 4;
+    temp.p = this.data.pageNum;
+    temp.numPerPage = this.data.numPerPage;
+    var that = this,
+      ifLoad = false,
+      arr1 = that.data.collectData,
+      arr2 = [];
+    Trequest({
+      url: 'article/getlist',
+      data: temp,
+      callback(res) {
+        // let englishData = res.data.data;
+        arr2 = res.data.data;
+        that.setData({
+          collectData: arr1.concat(arr2),
+          total: res.data.total,
+          pageUrl: '/pages/english/english'
+        })
+        let page = that.data.pageNum,
+          a = that.data.total / that.data.numPerPage;
+        if (page < a) {
+          ifLoad = true;
+        } else {
+          ifLoad = false;
+        }
+        that.setData({
+          ifLoad: ifLoad
+        })
+      }
+    });
+  },
+  lessonList: function(temp) {
+    temp.no_item = 1;
+    temp.p = this.data.pageNum;
+    temp.numPerPage = this.data.numPerPage;
+    var that = this,
+      ifLoad = false,
+      arr1 = that.data.collectData,
+      arr2 = [];
+    // 列表接口   subject_id：视听读列表    title：搜索    gc_id：固定课程
+    Trequest({
+      url: 'goods/getlist',
+      data: temp,
+      callback(res) {
+        arr2 = res.data.data;
+        that.setData({
+          collectData: arr1.concat(arr2),
+          total: res.data.total
+        })
+        let page = that.data.pageNum,
+          a = that.data.total / that.data.numPerPage;
+        if (page < a) {
+          ifLoad = true;
+        } else {
+          ifLoad = false;
+        }
+        that.setData({
+          ifLoad: ifLoad
+        })
+      }
+    });
+  },
+  // 上拉加载
+  onReachBottom: function() {
+    let that = this,
+      ifLoad = this.data.ifLoad,
+      params = this.data.params,
+      page = this.data.pageNum,
+      a = this.data.total / this.data.numPerPage;
+    if (ifLoad == true) {
+      if (page < a) {
+        page++;
+        that.setData({
+          hasMore: true,
+          numPerPage: that.data.numPerPage,
+          pageNum: page
+        })
+        // that.lessonList(params);
+        that.data.isEnglish ? that.englishList(params) : that.lessonList(params);
+      } else {
+        that.setData({
+          hasMore: false,
+          ifLoad: false
+        })
+      }
+    } else {
+      that.setData({
+        hasMore: false,
+        ifLoad: false
+      })
+    }
+  }
+})

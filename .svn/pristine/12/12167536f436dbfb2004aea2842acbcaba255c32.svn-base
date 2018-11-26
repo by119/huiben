@@ -1,0 +1,17 @@
+<view class='walkman container'>
+<block wx:for="{{walkmanData}}" wx:key="index">
+  <view class='walkman-list'>
+    <view class='walkman-time'>{{index}}</view>
+     <view class='walkman-content'>
+      <block wx:for="{{item}}" wx:key="index">
+        <view class='list clearfix' data-coverimgurl="{{coverImgUrl}}" data-title="{{item.title}}" data-src="{{item.radio_url}}" bindtap='palyMusic'>
+          <icon class="iconfont icon-playicon"></icon>
+          <text class='list-text'>{{item.title}}</text>
+        </view>
+      </block>
+    </view> 
+  </view>
+</block>
+<music-ctrl walkmanState="{{walkmanPlay.walkmanState}}" coverImgUrl="{{coverImgUrl}}" title="{{walkmanPlay.title}}" current="{{walkmanPlay.current}}" time="{{walkmanPlay.time}}" playicon="{{walkmanPlay.playicon}}" audioPress="{{walkmanPlay.audioPress}}" bind:iconStop="_iconStop"  bind:iconPlay="_iconPlay" bottom="2"></music-ctrl>
+</view>
+<icon class='iconfont icon-top goTop' hidden='{{!floorstatus}}' bindtap="goTop"></icon>

@@ -1,0 +1,27 @@
+<view class='mine-vip container'>
+  <view class='vip-head'>
+    <view class='mine-info'>
+      <image mode="aspectFill" src='{{info.img}}'></image>
+      <view class='mine-txt'>
+        <view class='mine-name'>{{info.name}}</view>
+        <view class='mine-level'>{{info.level}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='vip-level'>
+    <view class='vip-list clearfix'>
+      <image mode='widthFix' src="/images/vippic.png"/>
+      <image mode='widthFix' src="/images/vippic.png" class='img-level'/>
+      <image mode='widthFix' src="/images/vippic.png"/>
+    </view>
+  </view>
+  <view class='vip-foot'>
+    <view class='vip-buy'>
+      <view class='vip-time'>VIP时间：{{vipBuy.time}}</view>
+      <view class='vip-price'>现价：￥{{vipBuy.price}}</view>
+      <view class='vip-cost'>￥{{vipBuy.cost}}</view>
+      <view class='vip-buy-btn' bindtap='vipBuy'>立即购买</view>
+  </view>
+  </view>
+ 
+</view>

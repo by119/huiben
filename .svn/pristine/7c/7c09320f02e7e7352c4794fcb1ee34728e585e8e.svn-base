@@ -1,0 +1,18 @@
+<view class='mine-balance container'>
+  <view class='balance-detail'>
+    <text>账户余额</text>
+    <view>
+      <text class='balance-count'>{{balanceCount}}</text>
+    </view>
+  </view>
+  <view class='tools'>
+    <navigator class='tool' url='../balance-detail/balance-detail'>
+      <text>明细</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </navigator>
+    <navigator class='tool' url='../balance-recharge/balance-recharge'>
+      <text>充值</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </navigator>
+  </view>
+</view>

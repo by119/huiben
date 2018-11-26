@@ -1,0 +1,42 @@
+/* components/list/list.wxss */
+
+.list {
+  width: 690rpx;
+  padding: 30rpx;
+}
+
+.list image {
+  width: 220rpx;
+  height: 150rpx;
+  border-radius: 20rpx;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.list-content {
+  width: 400rpx;
+  display: inline-block;
+  margin-left: 30rpx;
+}
+
+.list-title {
+  color: #333;
+  font-size: 34rpx;
+  font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.list-count {
+  color: #989898;
+  font-size: 26rpx;
+  line-height: 80rpx;
+}
+
+.list-price {
+  color: red;
+  font-size: 28rpx;
+  line-height: 80rpx;
+  float: right;
+}

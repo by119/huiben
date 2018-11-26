@@ -1,0 +1,132 @@
+var e = require("../../static/js/request.js"),
+  t = getApp();
+
+Page({
+  data: {
+    page: '',
+    options: ''
+  },
+  onLoad: function(e) {
+    // console.log(e.pageAs, e, 'pageAs');
+    var str = '';
+    for (let i in e) {
+      if (i != 'pageAs') {
+        if (str == '') {
+          str += '?' + i + '=' + e[i];
+        } else {
+          str += '&' + i + '=' + e[i];
+        }
+      }
+    }
+    this.setData({
+      pageAs: e.pageAs,
+      options: str
+    })
+    // t.pageOnLoad(this);
+  },
+  // onReady: function() {
+  //     t.pageOnReady(this);
+  // },
+  // onShow: function() {
+  //     t.pageOnShow(this);
+  // },
+  // onHide: function() {
+  //     t.pageOnHide(this);
+  // },
+  // onUnload: function() {
+  //     t.pageOnUnload(this);
+  // },
+  getUserInfo: function(t) {
+    var that = this;
+    // console.log(t.detail);
+    //  "getUserInfo:ok" == t.detail.errMsg && (
+    //   wx.showLoading({
+    //       title: "正在登录",
+    //       mask: !0
+    //   }), 
+    wx.login({
+      success: function(o) {
+        var n = o.code;
+        wx.request({
+          url: 'https://huiben.fengsh.cn/api/user/wechatLoginMiniProgram',
+          method: "POST",
+          data: {
+            code: n,
+            encryptedData: t.detail.encryptedData,
+            iv: t.detail.iv,
+            headimgurl: t.detail.userInfo.avatarUrl,
+            nickname: t.detail.userInfo.nickName
+          },
+          success: function(e) {
+            if (200 == e.statusCode) {
+              wx.setStorageSync("access_token", e.data.access_token), wx.setStorageSync("user_info", e.data);
+              // that.toPageFn(that.data.pageAs)
+              if (that.data.pageAs == 'lately') {
+                wx.switchTab({
+                  url: "/pages/lately/lately"
+                });
+              } else if (that.data.pageAs == 'mine') {
+                wx.switchTab({
+                  url: "/pages/mine/mine"
+                });
+              } else if (that.data.pageAs == 'video') {
+                wx.redirectTo({
+                  url: "/pages/video/video" + that.data.options
+                });
+              } else if (that.data.pageAs == 'mine-vip') {
+                wx.redirectTo({
+                  url: "/pages/mine-vip/mine-vip" + that.data.options
+                });
+              } else if (that.data.pageAs == 'code') {
+                wx.redirectTo({
+                  url: "/pages/share-code/share-code" + that.data.options
+                });
+              } else if (that.data.pageAs == 'share') {
+                wx.redirectTo({
+                  url: "/pages/mine-share/mine-share" + that.data.options
+                });
+              } else if (that.data.pageAs == 'collect') {
+                wx.redirectTo({
+                  url: "/pages/mine-collect/mine-collect" + that.data.options
+                });
+              } else if (that.data.pageAs == 'balance') {
+                wx.redirectTo({
+                  url: "/pages/mine-balance/mine-balance" + that.data.options
+                });
+              } else if (that.data.pageAs == 'coupon') {
+                wx.redirectTo({
+                  url: "/pages/coupon/coupon" + that.data.options
+                });
+              }
+            }
+          },
+          complete: function() {
+            wx.hideLoading();
+          }
+        });
+      },
+      fail: function(e) {
+
+      }
+    });
+  },
+  toPageFn(a) {
+    var url = '';
+    switch (a) {
+      case 'video':
+        url = '/pages/video/video';
+        break;
+      case 'mine':
+        url = '/pages/mine/mine';
+        break;
+      case 'lately':
+        url = '/pages/lately/lately';
+        break;
+      default:
+        url = '/pages/suggest/suggest'
+    }
+    wx.switchTab({
+      url: a
+    });
+  }
+});

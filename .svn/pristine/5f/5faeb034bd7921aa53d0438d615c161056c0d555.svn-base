@@ -1,0 +1,29 @@
+<!--pages/picturebook/picturebook.wxml-->
+<view class='picturebook'>
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" bindchange="changeCurrent" current="{{current}}">
+    <block wx:for="{{bookData}}">
+      <swiper-item>
+        <scroll-view scroll-y="true">
+          <image src="{{item.imgUrls}}" class="slide-image" />
+          <view class='rook-content'>
+            <rich-text nodes="{{item.nodeStr}}"></rich-text>
+          </view>
+        </scroll-view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class='foot-ctrl'>
+    <view class='circular'>
+      <icon class='iconfont book-state icon-play-e'></icon>
+    </view>
+    <view class='page-num'><text>{{current+1}}</text>/<text>{{count}}</text></view>
+    <view bindtap='prevFn' class='changepage prev {{prevGrey}}'>
+      <icon class='iconfont icon-prev'></icon>
+      <text>上一页</text>
+    </view>
+    <view bindtap='nextFn' class='changepage next {{nextGrey}}'>
+      <text>下一页</text>
+      <icon class='iconfont icon-next'></icon>
+    </view>
+  </view>
+</view>

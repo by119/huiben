@@ -1,0 +1,39 @@
+const Trequest = require('../../static/js/request.js');
+Page({
+  data: {
+    balanceCount: '0.00',
+    status:1,
+    list: []
+  },
+  onShow: function () { //balance
+    var userInfo = wx.getStorageSync('user_info').data;
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=balance"
+      });
+      return false;
+    } else {
+      this.setData({
+        userInfo: userInfo
+      })
+    }
+    this.setData({
+      balanceCount: wx.getStorageSync('user_info').data.money
+    })
+  },
+  onLoad: function(options) {
+    var that = this;
+    // 用户余额 明细
+    Trequest({
+      url: 'user_money_log/getlist',
+      data: {
+        type:0
+      },
+      callback(res) {
+        that.setData({
+          list:res.data.data
+        })
+      }
+    });
+  },
+})

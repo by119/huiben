@@ -1,0 +1,94 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.2.2",
+	"appid": "wx5106c3ac05268f03",
+	"projectname": "huiben",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "login",
+					"pathName": "pages/login/login",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "video",
+					"pathName": "pages/video/video",
+					"query": "id=21"
+				},
+				{
+					"id": -1,
+					"name": "english",
+					"pathName": "pages/english/english",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "学说话",
+					"pathName": "pages/tape/tape",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "绘本",
+					"pathName": "pages/picturebook/picturebook",
+					"query": "gi_id=3"
+				},
+				{
+					"id": 5,
+					"name": "少儿",
+					"pathName": "pages/lists/lists",
+					"query": "gc_id=2&bar_title=少儿&index=0"
+				},
+				{
+					"id": -1,
+					"name": "绘本",
+					"pathName": "pages/picturebook/picturebook",
+					"query": "gi_id=3"
+				},
+				{
+					"id": -1,
+					"name": "nav-more",
+					"pathName": "pages/nav-more/nav-more",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "偏好选择",
+					"pathName": "pages/preference/preference",
+					"query": ""
+				}
+			]
+		}
+	}
+}

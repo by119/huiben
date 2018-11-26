@@ -1,0 +1,81 @@
+<view class='mine-vip container'>
+  <view class='vip-head'>
+    <view class='mine-info'>
+      <image mode="aspectFill" src='{{userInfo.avatar}}'></image>
+      <view class='mine-txt'>
+        <view class='mine-name'>{{userInfo.nickname}}</view>
+        <view class='mine-level'>vip{{userInfo.userVip?userInfo.userVip.level:'0'}}</view>
+        <view class='vip-endtime' wx:if="{{userInfo.userVip}}">到期：{{userInfo.userVip.expire_time}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='vip-level'>
+    <swiper display-multiple-items="3" bindchange='swiperTab' current="{{index}}">
+      <swiper-item>
+      </swiper-item>
+      <block wx:for="{{vipList}}" wx:key="index">
+        <swiper-item>
+          <block wx:if="{{currentTab==index}}">
+            <image data-level="{{item.level}}" mode='widthFix' src="{{item.icon_url}}" bindload="imageLoad" data-index="{{ index }}" style="width:{{ images[index].width2 }}rpx; height:{{ images[index].height2 }}rpx;margin-top:2.5vh"></image>
+          </block>
+          <block wx:else>
+            <image data-level="{{item.level}}" mode='widthFix' src="{{item.icon_url}}" bindload="imageLoad" data-index="{{ index }}" style="width:{{ images[index].width }}rpx; height:{{ images[index].height }}rpx;margin-left:15rpx;margin-top:4vh;"></image>
+          </block>
+        </swiper-item>
+      </block>
+      <swiper-item></swiper-item>
+    </swiper>
+  </view>
+  <view class='vip-foot'>
+    <view class='vip-buy'>
+      <view class='vip-time'>VIP时间：{{vipBuy.month}}个月</view>
+      <view class='vip-price'>现价：￥{{vipBuy.price}}</view>
+      <!-- <view class='vip-cost'>￥{{vipBuy.cost}}</view> -->
+      <view class='vip-coupon' bindtap='choseCoupon'>
+        <text>优惠券：</text>
+        <text class='my-coupon'>{{myCoupon}}</text>
+        <icon class='iconfont icon-more'></icon>
+      </view>
+      <view class='vip-buy-btn' bindtap='vipBuyFn' data-level="{{vipBuy.level}}">立即购买</view>
+    </view>
+  </view>
+</view>
+<view class='model-bg' style='display:{{modelBg}}' bindtap='closeCoupon'></view>
+<view class='coupon-box coupon-list' style='transform: translateY({{couponY}});'>
+  <view bindtap='withoutCoupon' style='margin-bottom:30rpx;line-height:60rpx;'>
+    <text style='color:#9a9a9a'>不使用优惠券</text> 
+    <icon style='float:right;color:#9a9a9a' class='iconfont icon-close'></icon>
+  </view>
+  <block wx:for="{{couponList}}" wx:for-item="coupon" wx:key="index">
+    <view class="coupon-item coupon-status-0" style="margin-top:20rpx;" data-id="{{coupon.promo_code.id}}" data-msg="{{coupon.promo_code.msg}}" data-discount="{{coupon.promo_code.discount}}" data-amount="{{coupon.promo_code.amount}}" data-man="{{coupon.promo_code.man}}"
+      bindtap='useCoupon'>
+      <image class="coupon-bg" src="/images/img-coupon-bg-0.png"></image>
+      <view class="flex-row" style="height: 100%;overflow: hidden">
+        <view class="flex-grow-0 flex-col flex-y-center flex-x-center coupon-left">
+          <view wx:if="{{coupon.promo_code.discount>0}}" class="flex-row flex-y-bottom">
+            <view style="font-size: {{coupon.promo_code.discount.length>4?'15':'17'}}pt;line-height: .9">
+              {{coupon.promo_code.discount}}
+            </view>
+            <view style="font-size: 9pt">折</view>
+          </view>
+          <view wx:else class="flex-row flex-y-bottom">
+            <view style="font-size: 9pt">￥</view>
+            <view style="font-size: {{coupon.promo_code.amount.length>4?'15':'17'}}pt;line-height: .9">
+              {{coupon.promo_code.amount}}
+            </view>
+          </view>
+        </view>
+        <view class="flex-grow-1 flex-y-center coupon-right">
+          <view style="width:100%;">
+            <view class="flex-row flex-y-center mb-10" style="margin-bottom:5rpx;">
+              <view class="flex-grow-1" style="font-size: 11pt;">{{coupon.promo_code.msg}}</view>
+            </view>
+            <view style="font-size: 8pt;color: #666666">{{coupon.promo_code.start_date}} ~ {{coupon.promo_code.end_date}}</view>
+            <text class="user_coupon_font">全场通用</text>
+            <text class="user_coupon_font" style='margin-left:15rpx;' wx:if="{{coupon.promo_code.discount<=0}}">满{{coupon.promo_code.man}}减{{coupon.promo_code.amount}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

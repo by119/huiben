@@ -1,0 +1,147 @@
+var app = getApp();
+const Trequest = require('../../static/js/request.js');
+
+Page({
+  data: {
+    vipList: [],
+    images: [],
+    currentTab: 0,
+    userInfo: {},
+    level: 0,
+    vipBuy: {
+      month: '6',
+      price: 40,
+      cost: 100
+    }
+  },
+  onShow: function() {
+    var userInfo = wx.getStorageSync('user_info').data;
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=mine-vip"
+      });
+      return false;
+    }
+    this.setData({
+      userInfo: userInfo
+    })
+  },
+  onLoad: function(options) {
+    var that = this;
+    that.setData({
+      userInfo: wx.getStorageSync('user_info').data
+    })
+    if (that.data.userInfo.userVip){
+      that.setData({
+        level: that.data.userInfo.userVip.level || 0
+      })
+    } else {
+      that.setData({
+        level: 0
+      })
+    }
+    // 用户vip
+    Trequest({
+      url: 'user_vip_level/getlist',
+      data: {},
+      callback(res) {
+        // console.log(res.data);
+        let data = res.data,
+          arr = [];
+        for (let i in data) {
+          arr.push(data[i]);
+        }
+        that.setData({
+          vipList: arr,
+          vipBuy: arr[that.data.level]
+        })
+      }
+    });
+  },
+  swiperTab: function(e) {
+    var current = e.detail.current,
+      that = this;
+    this.setData({
+      currentTab: current,
+      vipBuy: that.data.vipList[current]
+    });
+
+  },
+  vipBuyFn: function (e) {
+    var userInfo = wx.getStorageSync('user_info').data;
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=mine-vip"
+      });
+      return false;
+    }
+    let level = e.currentTarget.dataset.level,
+      that = this;
+    // user_vip_log/add  level  id = 1  type =4
+    // 用户购买vip
+    Trequest({
+      url: 'user_vip_log/add',
+      data: {
+        id: 1,
+        type: 4,
+        level: level
+      },
+      callback(data) {
+        wx.requestPayment({
+          timeStamp: data.data.data.timeStamp,
+          nonceStr: data.data.data.nonceStr,
+          package: data.data.data.package,
+          signType: 'MD5',
+          paySign: data.data.data.paySign,
+          success: function(res) {
+            var _user_info = wx.getStorageSync('user_info');
+            if (_user_info.data.userVip) {
+              _user_info.data.userVip.level = level;
+            } else {
+              _user_info.data.userVip = {
+                level: level
+              };
+            }
+            wx.setStorageSync('user_info', _user_info);
+            that.setData({
+              userInfo: wx.getStorageSync('user_info').data
+            })
+            wx.showToast({
+              title: '支付成功！',
+              icon: 'success',
+              duration: 5000
+            })
+          },
+          fail: function(res) {
+            wx.showToast({
+              title: '支付失败！',
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        })
+
+      }
+    });
+  },
+  imageLoad: function(e) {
+    var $width = e.detail.width, //获取图片真实宽度
+      $height = e.detail.height,
+      ratio = $width / $height; //图片的真实宽高比例
+    var viewWidth = 190, //设置图片显示宽度
+      viewHeight = 190 / ratio; //计算的高度值
+    var viewWidth2 = 220, //设置图片显示宽度
+      viewHeight2 = 220 / ratio; //计算的高度值
+    var image = this.data.images;
+    //将图片的datadata-index作为image对象的key,然后存储图片的宽高值
+    image[e.target.dataset.index] = {
+      width: viewWidth,
+      height: viewHeight,
+      width2: viewWidth2,
+      height2: viewHeight2
+    }
+    this.setData({
+      images: image
+    })
+  }
+})

@@ -1,0 +1,10 @@
+<!--pages/preference/preference.wxml-->
+<view class='preference container'>
+  <view class='title'>选择你感兴趣的内容</view>
+  <view class='tip'>选择后，将优先推荐相关内容给你哦</view>
+  <view class='tag-box'>
+    <text class='tag' wx:for="{{list}}" wx:key="{{index}}" style='color:{{bdColor[index]}};border-color:{{bdColor[index]}};background-color:{{bgColor[index]}}' bindtap='select' data-i="{{index}}" data-id="{{item.id}}">{{item.name}}</text>
+  </view>
+  <view class='btn' wx:if="{{btnStr}}">{{btnStr}}</view>
+  <view class='btn add-btn' wx:else bindtap='saveTag'>保存</view>
+</view>

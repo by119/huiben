@@ -1,0 +1,335 @@
+/* pages/video/video.wxss */
+
+#myVideo {
+  position: relative;
+  width: 750rpx;
+}
+
+.cover-img {
+  position: relative;
+  width: 750rpx;
+}
+
+.top-btn {
+  position: absolute;
+  top: 150rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500rpx;
+}
+
+.cash-buy {
+  width: 200rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  border: 2rpx solid #e9c98e;
+  float: left;
+  color: #e9c98e;
+}
+
+.open-vip {
+  width: 200rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  border: 2rxp solid #da9b4e;
+  color: #603000;
+  float: right;
+  background: -moz-linear-gradient(to left, #e8c58d, #da9b4e);
+  background: -o-linear-gradient(to left, #e8c58d, #da9b4e);
+  background: -webkit-linear-gradient(to left, #e8c58d, #da9b4e);
+  background: linear-gradient(to left, #e8c58d, #da9b4e);
+  background-color: #da9b4e;
+}
+
+.img-detail {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 30rpx;
+}
+
+.video-detail {
+  position: absolute;
+  z-index: 9999;
+  bottom: 0rpx;
+  padding: 20rpx 30rpx;
+  font-size: 26rpx;
+  color: #fff;
+}
+
+.img-detail icon {
+  line-height: 60rpx;
+  font-size: 36rpx;
+  color: #fff;
+  /* margin: 8rpx 10rpx 0 70rpx; */
+  margin-left: 80rpx;
+  float: left;
+}
+
+.icon-our-img {
+  width: 40rpx;
+  height: 40rpx;
+  float: left;
+  vertical-align: middle;
+  /* line-height: 60rpx; */
+  margin-left: 80rpx;
+}
+
+.icon-txt {
+  float: left;
+  line-height: 60rpx;
+}
+
+.avatar {
+  position: relative;
+  width: 45rpx;
+  height: 45rpx;
+  border: 4rpx solid #fff;
+  border-radius: 50%;
+  margin-right: -30rpx;
+  line-height: 60rpx;
+  float: left;
+  vertical-align: middle;
+}
+
+.video-info {
+  padding: 40rpx;
+}
+
+.video-title {
+  color: #333;
+  font-size: 36rpx;
+}
+
+.follow {
+  font-size: 30rpx;
+  padding: 0 14rpx;
+  line-height: 40rpx;
+  float: right;
+  color: #e64731;
+  border: 1rpx solid #e64731;
+  border-radius: 25rpx;
+}
+
+.lesson-count {
+  color: #9b9b9b;
+  font-size: 24rpx;
+  line-height: 70rpx;
+}
+
+.price-tip {
+  color: #fff;
+  font-size: 24rpx;
+  padding: 2rpx 5rpx;
+  border-radius: 8rpx;
+  background-color: #e64731;
+}
+
+.now-price {
+  color: #e64731;
+  margin: 0 20rpx;
+  font-size: 36rpx;
+}
+
+.price {
+  color: #9b9b9b;
+  font-size: 34rpx;
+  text-decoration: line-through;
+}
+
+.privilege {
+  line-height: 80rpx;
+  background-color: #f5f5f5;
+  font-size: 28rpx;
+  padding: 0 40rpx;
+  color: #838383;
+}
+
+.privilege icon {
+  font-size: 32rpx;
+}
+
+.privilege text {
+  margin: 0 30rpx 0 5rpx;
+}
+
+.swiper-tab {
+  width: 100%;
+  border-bottom: 2rpx solid #e1e1e1;
+  text-align: center;
+  height: 88rpx;
+  line-height: 88rpx;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.swiper-tab-item {
+  flex: 1;
+  color: #999;
+}
+
+.active {
+  color: #e64731;
+  border-bottom: 4rpx solid #e64731;
+}
+
+swiper {
+  height: 50vh;
+}
+
+.video-foot {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 690rpx;
+  padding: 0rpx 30rpx;
+  background-color: #f5f5f5;
+}
+
+.share-btn {
+  outline: none;
+  border-color: transparent;
+  padding: 0;
+  background-color: transparent;
+  float: left;
+  margin: 5rpx 50rpx;
+  color: #9b9b9b;
+  font-size: 24rpx;
+  line-height: unset;
+}
+
+.share-free {
+  position: fixed;
+  bottom: 30rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 80rpx;
+  background-color: #e64731;
+  color: #fff;
+  border-radius: 5rpx;
+  width: 690rpx;
+  text-align: center;
+  font-size: 32rpx;
+}
+
+button::after {
+  border: unset;
+}
+
+.share-btn icon {
+  display: block;
+  font-size: 40rpx;
+}
+
+.share-btn text {
+  display: block;
+}
+
+.buy {
+  position: absolute;
+  right: 30rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 80rpx;
+  background-color: #e64731;
+  color: #fff;
+  border-radius: 5rpx;
+  width: 500rpx;
+  text-align: center;
+  font-size: 32rpx;
+}
+
+.scroll {
+  height: 100%;
+}
+
+/* 课程  */
+
+.lesson {
+  background: #fff;
+  padding: 30rpx;
+}
+
+.lesson-head {
+  font-size: 32rpx;
+  line-height: 80rpx;
+  font-weight: 700;
+}
+
+.lesson-list {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #e1e1e1;
+}
+
+.lesson-title {
+  font-size: 30rpx;
+  color: #333;
+  line-height: 40rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.lesson-intro {
+  line-height: 40rpx;
+  font-size: 24rpx;
+  color: #9b9b9b;
+}
+
+.duditions {
+  float: right;
+  color: #e64731;
+  border: 1rpx solid #e64731;
+  padding: 1rpx 3rpx;
+  border-radius: 5rpx;
+  line-height: 26rpx;
+}
+
+.music-box {
+  width: 750rpx;
+  height: 500rpx;
+  position: fixed;
+  left: 0;
+  bottom: 20vhimportant;
+  z-index: 10;
+  background-color: pink;
+}
+
+/* 倍速  */
+
+.speed-box {
+  width: 100%;
+  position: relative;
+}
+
+.speed-reduce {
+  float: left;
+}
+
+.speed-add {
+  float: right;
+}
+
+.speed-reduce, .speed-add {
+  background-color: #3c6;
+  padding: 0 20rpx;
+  font-size: 36rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  color: #44434E;
+}
+
+.speed {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #333;
+  font-size: 32rpx;
+  margin: 5rpx;
+}

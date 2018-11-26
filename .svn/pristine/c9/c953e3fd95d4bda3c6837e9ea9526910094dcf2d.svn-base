@@ -1,0 +1,29 @@
+//获取应用实例
+const app = getApp();
+const Trequest = require('../../static/js/request.js');
+
+Page({
+  data: {
+    userInfo: {}
+  },
+  onShow: function() {
+    var userInfo = wx.getStorageSync('user_info').data;
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=mine"
+      });
+      return false;
+    }else {
+      this.setData({
+        userInfo: userInfo
+      })
+    }
+  },
+  onLoad: function() {
+    var that = this,
+      userInfo = wx.getStorageSync('user_info').data;
+    that.setData({
+      userInfo: userInfo
+    })
+  }
+})

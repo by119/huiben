@@ -1,0 +1,95 @@
+page {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-tab {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  font-size: 34rpx;
+  background-color: #fff;
+  position: fixed;
+  z-index: 12;
+}
+
+.swiper-tab-b {
+  height: 7vh;
+  line-height: 7vh;
+  top: 0;
+  /* background-color: skyblue; */
+}
+
+.swiper-tab-s {
+  top: 7vh;
+  /* height: 4vh; */
+   /* padding: 1vh 0;  */
+  text-align: left;
+  /* background-color: pink; */
+}
+
+.swiper-tab scroll-view {
+  white-space: nowrap;
+}
+
+.swiper-tab .navigator-hover {
+  background-color: transparent;
+}
+
+.swiper-tab-b .swiper-tab-item {
+  /* width: 100rpx; */
+  padding: 0 0 0 30rpx;
+  color: #333;
+  display: inline-block;
+  text-align: center;
+}
+
+.swiper-tab-s .swiper-tab-item-s {
+  padding: 0 20rpx;
+  color: #333;
+  display: inline-block;
+  text-align: center;
+  border: 1rpx solid transparent;
+  background-color: #EFEDEE;
+  margin-left: 20rpx;
+  border-radius: 3vh;
+  font-size: 28rpx;
+  line-height: 46rpx;
+}
+
+.swiper-tab .active {
+  color: #e64731;
+   border-bottom: 4rpx solid #e64731; 
+}
+.swiper-tab-s .active-s {
+  color: #e64731;
+  border: 1rpx solid #e64731;
+  background-color: #fff;
+}
+
+.whole-title {
+  padding: 0 30rpx;
+}
+
+.lists {
+  width: 100%;
+  height: 100%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.lists-scroll {
+  height: 100vh;
+}
+
+.have-tab {
+  height: 93vh;
+  padding-top: 8vh;
+}
+.have-tab-s {
+  height: 88vh;
+  padding-top: 13vh;
+}

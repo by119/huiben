@@ -1,0 +1,12 @@
+<!--components/list-news/list-news.wxml-->
+<view class='list-news'>
+  <navigator url='{{pageUrl}}?id={{temp}}'>
+    <image mode='aspectFill' src="{{img}}"></image>
+    <view class='list-content'>
+      <text class='list-title'>{{title}}</text>
+      <text class='list-explain'>{{explain}}</text>
+      <text class='list-time'>{{time}}</text>
+    </view>
+  </navigator>
+  <icon bindtap='_delFn' data-delsub="{{delSub}}" data-delid="{{delId}}" style='display:{{delBtn}}' class='iconfont icon-del del-btn'></icon>
+</view>

@@ -1,0 +1,75 @@
+{
+  "pages": [
+    "pages/suggest/suggest",
+    "pages/preference/preference",
+    "pages/english/english",
+    "pages/login/login",
+    "pages/search/search",
+    "pages/picturebook/picturebook",
+    "pages/walkman/walkman",
+    "pages/dynamic/dynamic",
+    "pages/lately/lately",
+    "pages/video/video",
+    "pages/mine/mine",
+    "pages/mine-vip/mine-vip",
+    "pages/mine-balance/mine-balance",
+    "pages/balance-detail/balance-detail",
+    "pages/balance-recharge/balance-recharge",
+    "pages/mine-order/mine-order",
+    "pages/coupon/coupon",
+    "pages/coupon-list/coupon-list",
+    "pages/mine-collect/mine-collect",
+    "pages/mine-share/mine-share",
+    "pages/withdraw-cash/withdraw-cash",
+    "pages/share-record/share-record",
+    "pages/share-code/share-code",
+    "pages/setting/setting",
+    "pages/lists/lists",
+    "pages/about/about",
+    "pages/tape/tape",
+    "pages/nav-more/nav-more"   
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#e64731",
+    "navigationBarTitleText": "绘本",
+    "navigationBarTextStyle": "#fff"
+  },
+  "plugins": {
+    "WechatSI": {
+      "version": "0.1.0",
+      "provider": "wx069ba97219f66d99"
+    }
+  },
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#e2411f",
+    "borderStyle": "a9b7b7",
+    "list": [
+      {
+        "selectedIconPath": "images/icon_suggest_press.png",
+        "iconPath": "images/icon_suggest.png",
+        "pagePath": "pages/suggest/suggest",
+        "text": "推荐"
+      },
+      {
+        "selectedIconPath": "images/icon_dynamic_press.png",
+        "iconPath": "images/icon_dynamic.png",
+        "pagePath": "pages/dynamic/dynamic",
+        "text": "动态"
+      },
+      {
+        "selectedIconPath": "images/icon_lately_press.png",
+        "iconPath": "images/icon_lately.png",
+        "pagePath": "pages/lately/lately",
+        "text": "最近学习"
+      },
+      {
+        "selectedIconPath": "images/icon_mine_press.png",
+        "iconPath": "images/icon_mine.png",
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  }
+}

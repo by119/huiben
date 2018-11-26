@@ -1,0 +1,64 @@
+const Trequest = require('../../static/js/request.js');
+Page({
+  data: {
+    userInfo: {},
+    codeImg: ''
+  },
+  onLoad: function (options) {
+    var that = this;
+    // 获取二维码
+    Trequest({
+      url: 'wechat/qrcode',
+      data: {},
+      callback(res) {
+        that.setData({
+          codeImg: res.data
+        })
+      }
+    });
+  },
+  onShow: function () {
+    var userInfo = wx.getStorageSync('user_info').data;
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=share"
+      });
+      return false;
+    } else {
+      this.setData({
+        userInfo: userInfo
+      })
+    }
+  },
+  withdrawFn: function() {
+    // console.log('提现');
+    var that = this;
+   wx.showModal({
+      title: "提示",
+      content: "确定要将全部佣金提现？",
+      success: function (e) {
+        e.confirm && (wx.showLoading({
+          title: "提现中",
+          mask: !0
+        }), Trequest({
+          url: 'withdraw/add',
+          data: {
+            amount: parseFloat(that.data.userInfo.money)
+          },
+          callback(res) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg,
+            });
+          }
+        }));
+      }
+    });
+  },
+  saveCode: function () {
+    wx.previewImage({
+      current: 'this.data.codeImg', // 当前显示图片的http链接
+      urls: [this.data.codeImg] // 需要预览的图片http链接列表
+    })
+  }
+})

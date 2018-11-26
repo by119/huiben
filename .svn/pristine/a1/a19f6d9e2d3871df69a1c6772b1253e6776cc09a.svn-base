@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "随身听",
+  "usingComponents": {
+    "music-ctrl": "/components/music-ctrl/music-ctrl"
+  }
+}

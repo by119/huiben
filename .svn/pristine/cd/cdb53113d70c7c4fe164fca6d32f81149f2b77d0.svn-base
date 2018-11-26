@@ -1,0 +1,85 @@
+<view class='lists container' style='background-image: url("{{bgImg}}");'>
+  <block wx:if="{{bar}}">
+    <!-- 一级标题  -->
+    <view class="swiper-tab swiper-tab-b">
+      <scroll-view scroll-x="true">
+        <block wx:for="{{swiperTab}}" wx:key="{{index}}">
+          <view bindtap='clickTab' class="swiper-tab-item {{title==item.name?'active':''}}" data-current="{{index}}" data-gc_id="{{item.id}}" data-bar-title="{{item.name}}">{{item.name}}</view>
+          <!-- 二级标题  -->
+          <view class="swiper-tab swiper-tab-s" wx:if="{{swiperTabS&&swiperTabS.length>0}}">
+            <scroll-view scroll-x="true">
+              <block wx:for="{{swiperTabS}}" wx:key="{{index}}">
+                <view bindtap='clickTabS' class="swiper-tab-item-s {{gc_id==item.id?'active-s':''}}" data-current="{{index}}" data-gc_id="{{item.id}}" data-bar-title="{{item.name}}">{{item.name}}</view>
+              </block>
+            </scroll-view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </block>
+  <block wx:if="{{collectData&&collectData.length}}">
+    <scroll-view class='lists-scroll {{swiperTab[currentTab].children&&swiperTab[currentTab].children.length>0?"have-tab-s":(bar?"have-tab":"")}}' scroll-y="true" scroll-top="{{scrollTop}}" bindscroll="scroll">
+      <view wx:if="{{isEnglish}}">
+        <view wx:for="{{collectData}}" wx:key="index">
+          <list-news id="listNews" temp="{{item.id}}" title="{{item.title}}" explain="{{item.content}}" time="{{item.create_time}}" img="{{item.pic_url}}" pageUrl="{{pageUrl}}"></list-news>
+        </view>
+      </view>
+      <view wx:elif="{{more==false}}">
+        <view class='whole-title' wx:if="{{collectData2&&collectData2.length>0&&more==false}}">
+          <navigator url='/pages/lists/lists?subject_id=2&gc_id={{gc_id}}&more=true'>
+            视频
+            <view class='whole-more'>
+              <text>更多</text>
+              <icon class="iconfont icon-more tool-more"></icon>
+            </view>
+          </navigator>
+        </view>
+        <view wx:for="{{collectData2}}" wx:key="index">
+          <list id="list" temp="{{item.id}}" img="{{item.pic_url}}" title="{{item.title}}" studyCount="{{item.learn_times_text}}" lessonCount="{{item.goods_item_count}}" pageUrl="{{pageUrl}}"></list>
+        </view>
+        <view class='whole-title' wx:if="{{collectData3&&collectData3.length>0&&more==false}}">
+          <navigator url='/pages/lists/lists?subject_id=3&gc_id={{gc_id}}&more=true'>
+            音频
+            <view class='whole-more'>
+              <text>更多</text>
+              <icon class="iconfont icon-more tool-more"></icon>
+            </view>
+          </navigator>
+        </view>
+        <view wx:for="{{collectData3}}" wx:key="index">
+          <list id="list" temp="{{item.id}}" img="{{item.pic_url}}" title="{{item.title}}" studyCount="{{item.learn_times_text}}" lessonCount="{{item.goods_item_count}}" pageUrl="{{pageUrl}}"></list>
+        </view>
+        <view class='whole-title' wx:if="{{collectData4&&collectData4.length>0&&more==false}}">
+          <navigator url='/pages/lists/lists?subject_id=4&gc_id={{gc_id}}&more=true'>
+            绘本
+            <view class='whole-more'>
+              <text>更多</text>
+              <icon class="iconfont icon-more tool-more"></icon>
+            </view>
+          </navigator>
+        </view>
+        <view wx:for="{{collectData4}}" wx:key="index">
+          <list id="list" temp="{{item.id}}" img="{{item.pic_url}}" title="{{item.title}}" studyCount="{{item.learn_times_text}}" lessonCount="{{item.goods_item_count}}" pageUrl="{{pageUrl}}"></list>
+        </view>
+      </view>
+      <view wx:else>
+        <view wx:for="{{collectData}}" wx:key="index">
+          <list id="list" temp="{{item.id}}" img="{{item.pic_url}}" title="{{item.title}}" studyCount="{{item.learn_times_text}}" lessonCount="{{item.goods_item_count}}" pageUrl="{{pageUrl}}"></list>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="has-more">
+      <view wx:if="{{hasMore}}">
+        <icon type="waiting" size="25" />
+        <text> 努力加载中...</text>
+      </view>
+      <view wx:else>
+        <text>没有更多内容了</text>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <list-null></list-null>
+  </block>
+</view>
+<icon class='iconfont icon-top goTop' hidden='{{!floorstatus}}' bindtap="goTop"></icon>

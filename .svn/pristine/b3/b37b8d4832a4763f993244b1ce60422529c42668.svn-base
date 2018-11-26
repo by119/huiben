@@ -1,0 +1,29 @@
+<view class='mine-balance container'>
+  <view class='balance-head'>
+    <text style='font-size:34rpx;'>账户余额</text>
+    <view>
+      <text class='balance-count'>{{balanceCount}}</text>
+    </view>
+  </view>
+  <view class="income-list" wx:if="{{list.length>0}}">
+    <view class="income-one" wx:for="{{list}}" wx:key="index">
+      <view class="income-road">{{item.msg}}</view>
+      <view class="flex-row">
+        <view class="flex-grow-1" style="color:#e64731;font-size:28rpx;" wx:if="{{item.amount>0}}">+{{item.amount}}</view>
+        <view class="flex-grow-1" style="color:#04BE01;font-size:28rpx;" wx:else>{{item.amount}}</view>
+        <view class="flex-grow-0" style="color:#999;font-size:26rpx;margin-top:6rpx;"> {{item.create_time}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- <view class='tools'> 
+     <navigator class='tool' url='../balance-detail/balance-detail'>
+      <text>明细</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </navigator> 
+     <navigator class='tool' url='../balance-recharge/balance-recharge'>
+      <text>充值</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </navigator> 
+  </view> -->
+</view>

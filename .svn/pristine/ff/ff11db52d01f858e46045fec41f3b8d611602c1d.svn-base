@@ -1,0 +1,278 @@
+var app = getApp();
+const Trequest = require('../../static/js/request.js');
+
+
+Page({
+  data: {
+    vipList: [],
+    images: [],
+    currentTab: 1,
+    currentNum: 1,
+    userInfo: {},
+    level: 0,
+    endTime: '',
+    codeAmount: 0,
+    vipBuy: {
+      pcl_id: null,
+      month: '',
+      price: 0,
+      cost: 0
+    },
+    myCoupon: '不使用',
+    couponList: [],
+    modelBg: 'none',
+    couponY: '0'
+  },
+  onShow: function() {
+    var userInfo = wx.getStorageSync('user_info').data;
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=mine-vip"
+      });
+      return false;
+    }
+    this.setData({
+      userInfo: userInfo
+    })
+  },
+  onLoad: function(options) {
+    var that = this;
+    that.setData({
+      userInfo: wx.getStorageSync('user_info').data
+    })
+    if (that.data.userInfo.userVip) {
+      that.setData({
+        level: that.data.userInfo.userVip.level || 0,
+        endTime: that.data.userInfo.userVip.expire_time || ''
+      })
+    } else {
+      that.setData({
+        level: 0,
+        endTime: ''
+      })
+    }
+    // 用户vip
+    Trequest({
+      url: 'user_vip_level/getlist',
+      data: {},
+      callback(res) {
+        let data = res.data,
+          arr = [],
+          vipBuyHas = 0;
+        for (let i in data) {
+          if (data[i].level == 2 && vipBuyHas == 0) {
+            vipBuyHas = 1;
+            that.setData({
+              currentTab: arr.length,
+              currentNum: arr.length,
+              vipBuy: data[i]
+            });
+          }
+          if (data[i].level == that.data.level && vipBuyHas == 0) {
+            vipBuyHas = 1;
+            that.setData({
+              currentTab: arr.length,
+              currentNum: arr.length,
+              vipBuy: data[i]
+            });
+          }
+          arr.push(data[i]);
+        }
+        that.setData({
+          vipList: arr
+        })
+      }
+    });
+  },
+  changeTab: function(e) {
+    this.setData({
+      currentTab: e.currentTarget.dataset.index,
+      currentNum: e.currentTarget.dataset.index
+    })
+  },
+  swiperTab: function(e) {
+    var current = e.detail.current,
+      that = this;
+    this.setData({
+      currentTab: current,
+      currentNum: current,
+      vipBuy: that.data.vipList[current],
+      'vipBuy.pcl_id': null,
+      myCoupon: '不使用'
+    });
+  },
+  // 优惠券 选择
+  choseCoupon: function() {
+    var that = this;
+    Trequest({
+      url: 'promo_code_log/getlist',
+      data: {
+        status: 0,
+        price: that.data.vipBuy.price
+      },
+      callback(res) {
+        if (res.data.data && res.data.data.length > 0) {
+          that.setData({
+            couponList: res.data.data,
+          })
+          that.setData({
+            modelBg: 'block',
+            couponY: '-650rpx'
+          })
+        } else {
+          wx.showToast({
+            title: '暂无可用优惠券',
+            icon: 'none'
+          })
+        }
+      }
+    });
+  },
+  // 优惠券选择框关闭
+  closeCoupon: function() {
+    this.setData({
+      modelBg: 'none',
+      couponY: '0%'
+    })
+  },
+  // 不使用优惠券
+  withoutCoupon: function() {
+    this.setData({
+      'vipBuy.pcl_id': null,
+      myCoupon: '不使用',
+      modelBg: 'none',
+      couponY: '0%'
+    })
+  },
+  useCoupon: function(e) {
+    var id = e.currentTarget.dataset.id,
+      discount = e.currentTarget.dataset.discount,
+      amount = e.currentTarget.dataset.amount,
+      man = e.currentTarget.dataset.man,
+      msg = e.currentTarget.dataset.msg,
+      str = '',
+      codeAmount = 0;
+    if (discount > 0) {
+      str = discount + '折' + msg;
+      codeAmount = (this.data.vipBuy.price * (1 - discount / 10)).toFixed(3);
+    } else {
+      str = '满' + man + '减' + amount + msg;
+      codeAmount = amount.toFixed(3);
+    }
+    this.setData({
+      'vipBuy.pcl_id': id,
+      myCoupon: str,
+      codeAmount: codeAmount
+    })
+    this.closeCoupon();
+  },
+  // 购买vip
+  vipBuyFn: function (e) {
+    var userInfo = wx.getStorageSync('user_info').data;
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=mine-vip"
+      });
+      return false;
+    }
+    let level = e.currentTarget.dataset.level,
+      pcl_id = this.data.vipBuy.pcl_id,
+      that = this;
+    var addData = {};
+    addData = {
+      id: 1,
+      type: 4,
+      level: level,
+      price: that.data.vipBuy.price,
+      promo_code_amount: that.data.codeAmount
+    };
+    if (pcl_id)
+      addData.pcl_id = pcl_id;
+    // user_vip_log/add  level  id = 1  type =4
+    // 用户购买vip
+    wx.showLoading({
+      title: "",
+      mask: !0
+    }), Trequest({
+      url: 'user_vip_log/add',
+      data: addData,
+      callback(data) {
+        setTimeout(function() {
+          wx.hideLoading();
+        }, 100);
+        if (!data.data.data){
+          wx.showToast({
+            title: data.data.msg,
+            icon: 'none',
+            duration: 2000
+          });
+          return false;
+        }
+        wx.requestPayment({
+          timeStamp: data.data.data.timeStamp,
+          nonceStr: data.data.data.nonceStr,
+          package: data.data.data.package,
+          signType: 'MD5',
+          paySign: data.data.data.paySign,
+          success: function(res) {
+            Trequest({
+              url: 'user_vip_log/getlist',
+              data: {
+                numPerPage: 1
+              },
+              callback(res) {
+                var _user_info = wx.getStorageSync('user_info');
+                if (_user_info.data.userVip) {
+                  _user_info.data.userVip.level = res.data.data[0].level;
+                  _user_info.data.userVip.expire_time = res.data.data[0].expire_time;
+                } else {
+                  _user_info.data.userVip = {
+                    level: res.data.data[0].level,
+                    expire_time: res.data.data[0].expire_time
+                  };
+                }
+                wx.setStorageSync('user_info', _user_info);
+                that.setData({
+                  userInfo: wx.getStorageSync('user_info').data
+                })
+              }
+            });
+            wx.showToast({
+              title: '支付成功！',
+              icon: 'success',
+              duration: 5000
+            })
+
+          },
+          fail: function(res) {
+            wx.showToast({
+              title: '支付失败！',
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        })
+      }
+    });
+  },
+  imageLoad: function(e) {
+    var $width = e.detail.width, //获取图片真实宽度
+      $height = e.detail.height,
+      ratio = $width / $height; //图片的真实宽高比例
+    var viewWidth = 190, //设置图片显示宽度
+      viewHeight = 190 / ratio; //计算的高度值
+    var viewWidth2 = 220, //设置图片显示宽度
+      viewHeight2 = 220 / ratio; //计算的高度值
+    var image = this.data.images;
+    //将图片的datadata-index作为image对象的key,然后存储图片的宽高值
+    image[e.target.dataset.index] = {
+      width: viewWidth,
+      height: viewHeight,
+      width2: viewWidth2,
+      height2: viewHeight2
+    }
+    this.setData({
+      images: image
+    })
+  }
+})

@@ -1,0 +1,120 @@
+// pages/picturebook/picturebook.js
+const Trequest = require('../../static/js/request.js');
+var n = getApp(),
+  pe = require("../../wxParse/wxParse.js");
+Page({
+  data: {
+    indicatorDots: false,
+    circular:true,
+    autoplay: false,
+    playicon:'play',
+    prevGrey: '',
+    nextGrey: '',
+    bookData: [],
+    count: 1,
+    current: 0,
+  },
+  onLoad: function(options) {
+    // console.log(options.gi_id,'book-id');
+    // 绘本的学习页面   goods_item_segment/ getlist gi_id= 课时的ID
+    // 会返回当前绘本下的所有页面    
+    var that = this;
+    Trequest({
+      url: 'goods_item_segment/getlist',
+      data: {
+        gi_id: options.gi_id
+      },
+      callback(res) {
+        that.setData({
+          bookData: res.data.data
+        })
+        var bookLen = that.data.bookData.length;
+        that.setData({
+          count: bookLen
+        })
+        if (that.data.current < 1) {
+          that.setData({
+            prevGrey: 'grey'
+          })
+        } else {
+          that.setData({
+            prevGrey: ''
+          })
+        }
+        if (that.data.current >= bookLen - 1) {
+          that.setData({
+            nextGrey: 'grey'
+          })
+        } else {
+          that.setData({
+            nextGrey: ''
+          })
+        }
+        pe.wxParse("content", "html", res.data.data[0].content, that, 5);
+      }
+    });
+  },
+  prevFn: function() {
+    // console.log('上一张')
+    if (this.data.current > 0) {
+      this.setData({
+        current: this.data.current - 1
+      })
+    }
+  },
+  nextFn: function() {
+    // console.log('下一张');
+    if (this.data.current < this.data.bookData.length - 1) {
+      this.setData({
+        current: this.data.current + 1
+      })
+    }
+  },
+  changeAutoplay: function(e) {
+    if (this.data.playicon == "play") {
+      this.setData({
+        playicon: 'playing'
+      })
+    } else {
+      this.setData({
+        playicon: 'play'
+      })
+    }
+    this.setData({
+      autoplay: !this.data.autoplay
+    })
+  },
+  changeCurrent: function(e) {
+    var that = e;
+    this.setData({
+      current: that.detail.current
+    })
+    if (this.data.current < 1) {
+      this.setData({
+        prevGrey: 'grey'
+      })
+    } else {
+      this.setData({
+        prevGrey: ''
+      })
+    }
+    if (this.data.current >= this.data.bookData.length - 1) {
+      this.setData({
+        nextGrey: 'grey',
+        autoplay: false,
+        playicon: 'play'
+      })
+    } else {
+      this.setData({
+        nextGrey: ''
+      })
+    }
+    pe.wxParse("content", "html", this.data.bookData[this.data.current].content, this, 5);
+  },
+  setContent: function() {
+    this.setData({
+      wxContent: this.bookData[this.data.current].content
+    })
+    pe.wxParse("content", "html", this.data.wxContent, this, 5);
+  }
+})

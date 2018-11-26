@@ -1,0 +1,18 @@
+<!--pages/setting/setting.wxml-->
+<view class='tools'>
+  <navigator class='tool' url='../share-record/share-record'>
+    <text>推广记录</text>
+    <icon class="iconfont icon-more tool-more"></icon>
+  </navigator>
+  <!-- <view  class='tool'>
+      <text>清空缓存数据</text>
+    </view> -->
+  <button class='tool phonebtn' open-type="getPhoneNumber">
+    <text>绑定手机号码</text>
+    <icon class="iconfont icon-more tool-more"></icon>
+  </button>
+  <navigator class='tool' url='/pages/about/about'>
+    <text>关于</text>
+    <icon class="iconfont icon-more tool-more"></icon>
+  </navigator>
+</view>

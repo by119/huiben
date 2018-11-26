@@ -1,0 +1,15 @@
+<view class='walkman container'>
+<block wx:for="{{walkmanData}}">
+  <view class='walkman-list'>
+    <view class='walkman-time'>{{item.time}}</view>
+    <view class='walkman-content'>
+      <block wx:for="{{item.list}}">
+        <view class='list clearfix'>
+          <icon class="iconfont icon-playicon"></icon>
+          <text class='list-text'>{{item.text}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+</block>
+</view>

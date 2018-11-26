@@ -1,0 +1,71 @@
+// components/music-ctrl/music-ctrl.js
+Component({
+  /**
+   * 组件的属性列表
+   */
+  properties: {
+    title: {
+      type: String,
+      value: '此时此刻1'
+    },
+    bottom: {
+      type: Number,
+      value: 2
+    },
+    walkmanState :{
+      type:String,
+      value:'none'
+    },
+    coverImgUrl:{
+      type:String,
+      value:'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000'
+    },
+    singer:{
+      type:String,
+      value:'许巍'
+    },
+    epname:{
+      type:String,
+      value:'此时此刻2'
+    },
+    current: {
+      type: String,
+      value: '0:0'
+    },
+    time: {
+      type: String,
+      value: '0:0'
+    },
+    audioPress: {
+      type: Number,
+      value: 0
+    },
+    playicon: {
+      type: String,
+      value: 'play'
+    }
+    
+  },
+
+  created() {
+    
+  },
+  /**
+   * 组件的初始数据
+   */
+  data: {
+
+  },
+
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+    _iconStop() {
+      this.triggerEvent("iconStop");
+    },
+    _iconPlay() {
+      this.triggerEvent("iconPlay");
+    },
+  }
+})

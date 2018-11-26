@@ -1,0 +1,9 @@
+<!--pages/nav-more/nav-more.wxml-->
+<view class='nav-more container'>
+  <view class='nav-list clearfix'>
+    <navigator wx:for="{{navList}}" wx:key="{{index}}" url="{{item.link_arr.href}}">
+      <image mode='widthFix' src="{{item.pic_url}}" style='' />
+      <view>{{item.name}}</view>
+    </navigator>
+  </view>
+</view>

@@ -1,0 +1,118 @@
+const Trequest = require('../../static/js/request.js'),
+  a = getApp();
+
+Page({
+  data: {
+    list: [],
+    status: 0,
+    numPerPage: 10, //设置默认一次加载数据条数
+    pageNum: 1, // 设置加载的第几次，默认是第一次
+    hasMore: true, // “加载更多”
+    ifLoad: false,
+    total: 0 // 数据总条数
+  },
+  onLoad: function(t) {
+    var userInfo = wx.getStorageSync('user_info').data||'';
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=coupon&id=" + t.id
+      });
+      return false;
+    }
+    this.setData({
+      userInfo: userInfo
+    })
+    var that = this;
+    if (t.id) {
+      Trequest({
+        url: 'promo_code_log/add',
+        data: {
+          pc_id: t.id
+        },
+        callback(res) {
+          console.log(res);
+          if (res.data.code == 0) {
+            wx.showToast({
+              title: '领取成功',
+              icon: 'success'
+            })
+          } else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
+          }
+        }
+      });
+    }
+    this.getcoupon();
+  },
+  getcoupon: function(e) {
+    if (e) {
+      this.setData({
+        status: e.currentTarget.dataset.status,
+        list: [],
+        hasMore: true,
+        ifLoad: false,
+        pageNum: 1
+      })
+    }
+    var that = this,
+      ifLoad = false,
+      arr1 = that.data.list,
+      arr2 = [];
+    Trequest({
+      url: 'promo_code_log/getlist',
+      data: {
+        numPerPage: this.data.numPerPage,
+        p: this.data.pageNum,
+        status: that.data.status
+      },
+      callback(res) {
+        arr2 = res.data.data;
+        that.setData({
+          list: arr1.concat(arr2),
+          total: res.data.total
+        })
+        let page = that.data.pageNum,
+          a = that.data.total / that.data.numPerPage;
+        if (page < a) {
+          ifLoad = true;
+        } else {
+          ifLoad = false;
+        }
+        that.setData({
+          ifLoad: ifLoad
+        })
+      }
+    });
+  },
+  // 上拉加载
+  onReachBottom: function() {
+    let that = this,
+      ifLoad = this.data.ifLoad,
+      page = this.data.pageNum,
+      a = this.data.total / this.data.numPerPage;
+    if (ifLoad == true) {
+      if (page < a) {
+        page++;
+        that.setData({
+          numPerPage: that.data.numPerPage,
+          hasMore: true,
+          pageNum: page
+        })
+        that.getcoupon();
+      } else {
+        that.setData({
+          hasMore: false,
+          ifLoad: false
+        })
+      }
+    } else {
+      that.setData({
+        hasMore: false,
+        ifLoad: false
+      })
+    }
+  }
+});

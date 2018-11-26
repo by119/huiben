@@ -1,0 +1,76 @@
+/* pages/search/search.wxss */
+
+.search {
+  padding: 30rpx;
+}
+
+.section {
+  line-height: 60rpx;
+  margin: 0 auto 30rpx;
+}
+
+.searchcion {
+  margin: 10rpx 10rpx 10rpx 10rpx;
+  position: absolute;
+  left: 25%;
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  font-size: 30rpx; 
+}
+
+.section input {
+  font-size: 30rpx; 
+  float: left;
+  width: 540rpx;
+  background-color: #fafafa;  
+  text-align: center;
+  border-radius: 30rpx;
+  padding: 0 30rpx;
+   line-height: 60rpx; 
+}
+.section text {
+  color: #9b9b9b;
+  float: right;
+  font-size: 30rpx; 
+}
+
+/* 搜索历史  */
+
+.search-history {
+}
+
+.search-title {
+  margin: 50rpx 0 30rpx;
+}
+
+.search-title text {
+  font-size: 40rpx;
+}
+
+.search-title icon {
+  float: right;
+  color: #9b9b9b;
+}
+
+.search-list {
+  float: left;
+  margin: 12rpx;
+  padding: 0 40rpx;
+  border-radius: 30rpx;
+  background-color: #f5f5f5;
+  font-size: 32rpx;
+  line-height: 60rpx;
+  color: #333;
+}
+.search-list:hover {
+  color: red;
+}
+
+/* 没有记录  */
+.null {
+  width: 100%;
+  text-align: center;
+  font-size: 28rpx;
+  color: #999;
+}

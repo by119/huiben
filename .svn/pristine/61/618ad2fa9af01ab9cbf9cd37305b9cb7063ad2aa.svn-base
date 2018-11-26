@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "动态",
+  "usingComponents": {
+    "list-news": "/components/list-news/list-news"
+  }
+}

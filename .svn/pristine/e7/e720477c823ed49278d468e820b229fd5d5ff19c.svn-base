@@ -1,0 +1,97 @@
+// pages/setting/setting.js
+const Trequest = require('../../static/js/request.js');
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    PhoneNumber: ''
+  },
+  onShow: function() {
+    var _user_info = wx.getStorageSync('user_info');
+    if (_user_info.data.PhoneNumber) {
+      this.setData({
+        PhoneNumber: _user_info.data.PhoneNumber
+      })
+    } else {
+      this.setData({
+        PhoneNumber: ''
+      })
+    }
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {},
+  getPhoneNumber: function(e) {
+    var that = this;
+    // console.log(`是否成功调用${e.detail.errMsg}`);
+    // console.log(`加密算法的初始向量:${e.detail.iv}`);
+    // console.log(`包括敏感数据在内的完整用户信息的加密数据:${e.detail.encryptedData}`);
+    wx.login({
+      success: function(i) {
+        if (i.code) {
+          var o = i.code;
+          Trequest({
+            url: 'wechat/decrypt',
+            data: {
+              iv: e.detail.iv,
+              encryptedData: e.detail.encryptedData,
+              code: o
+            },
+            callback(n) {
+              if (n.data != null) {
+                var _user_info = wx.getStorageSync('user_info');
+                if (n.data.phoneNumber) {
+                  _user_info.data.PhoneNumber = n.data.phoneNumber;
+                  wx.showToast({
+                    title: "授权成功",
+                    icon: 'success'
+                  });
+                } else {
+                  _user_info.data.PhoneNumber = '';
+                  wx.showToast({
+                    title: "授权失败,请重试",
+                    icon: 'none'
+                  });
+                }
+                wx.setStorageSync('user_info', _user_info);
+                that.setData({
+                  PhoneNumber: n.data.phoneNumber
+                })
+              } else {
+                wx.showToast({
+                  title: "授权失败,请重试",
+                  icon: 'none'
+                });
+              }
+            }
+          });
+        } else wx.showToast({
+          title: "获取用户登录态失败！" + i.errMsg,
+          image: "/images/icon-warning.png"
+        });
+      }
+    });
+    // // if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+    // if (e.detail.errMsg.indexOf('fail') != -1) {
+    //   wx.showModal({
+    //     title: '提示',
+    //     showCancel: false,
+    //     content: '未授权',
+    //     success: function(res) {}
+    //   })
+    // } else {
+    //   wx.showModal({
+    //     title: '提示',
+    //     showCancel: false,
+    //     content: '同意授权',
+    //     success: function(res) {
+    //       console.log(`加密数据:${e.detail.encryptedData}`);
+
+    //     }
+    //   })
+    // }
+  }
+})

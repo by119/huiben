@@ -1,0 +1,13 @@
+<!--components/list/list.wxml-->
+<view class='list'>
+  <navigator url='{{pageUrl}}?id={{temp}}'>
+    <image mode='aspectFill' src='{{img}}'></image>
+    <view class='list-content'>
+      <view class='list-title'>{{title}}</view>
+      <view>
+        <text class="list-count">{{studyCount}}次学习 | 共{{lessonCount}}节课</text>
+        <!-- <text class="list-price">￥{{studyPrice}}</text> -->
+      </view>
+    </view>
+  </navigator>
+</view>

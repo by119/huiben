@@ -1,0 +1,13 @@
+<view class='mine-collect container'>
+  <view wx:if="{{collectData&&collectData.length}}">
+    <block wx:for="{{collectData}}" wx:key="index">
+      <list id="list" img="{{item.goods.pic}}" temp="{{item.goods.id}}" title="{{item.goods.title}}" studyCount="{{item.goods.learn_times_text}}" lessonCount="{{item.goods.goods_item_count}}" pageUrl="/pages/video/video"></list>
+    </block>
+  </view>
+  <view wx:else>
+    <view class="regard-null">
+      <image mode='aspectFill' src="/images/null.png"></image>
+      <text>暂时木有内容啊~</text>
+    </view>
+  </view>
+</view>

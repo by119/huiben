@@ -1,0 +1,29 @@
+<view class='lists container' style='background-image: url("{{bgImg}}");'>
+  <block wx:if="{{collectData&&collectData.length}}">
+    <scroll-view class='lists-scroll' scroll-y="true" scroll-top="{{scrollTop}}" bindscroll="scroll">
+      <view wx:if="{{isEnglish}}">
+        <view wx:for="{{collectData}}" wx:key="index">
+          <list-news id="listNews" temp="{{item.id}}" title="{{item.title}}" explain="{{item.content}}" time="{{item.create_time}}" img="{{item.pic_url}}" pageUrl="{{pageUrl}}"></list-news>
+        </view>
+      </view>
+      <view wx:else>
+        <view wx:for="{{collectData}}" wx:key="index">
+          <list id="list" temp="{{item.id}}" img="{{item.pic_url}}" title="{{item.title}}" studyCount="{{item.learn_times_text}}" lessonCount="{{item.goods_item_count}}" pageUrl="{{pageUrl}}"></list>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="has-more">
+      <view wx:if="{{hasMore}}">
+        <icon type="waiting" size="25" />
+        <text> 努力加载中...</text>
+      </view>
+      <view wx:else>
+        <text>没有更多内容了</text>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <list-null></list-null>
+  </block>
+</view>
+<icon class='iconfont icon-top goTop' hidden='{{!floorstatus}}' bindtap="goTop"></icon>

@@ -1,0 +1,9 @@
+
+Page({
+  data: {
+    balanceCount: '90.00'
+  },
+  onLoad: function (options) {
+
+  },
+})

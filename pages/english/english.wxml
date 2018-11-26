@@ -1,0 +1,12 @@
+<!--pages/english/english.wxml-->
+<import src="../../wxParse/wxParse.wxml"></import>
+<view class='english container'>
+  <template is="wxParse" data="{{wxParseData:content.nodes}}"></template>
+  <view class='translate'>
+    <text bindtap='translate'>翻译</text>
+  </view>
+  <view wx:if="{{showChinese}}">
+    <template is="wxParse" data="{{wxParseData:content2.nodes}}"></template>
+  </view>
+
+</view>

@@ -1,0 +1,10 @@
+.mine-balance {}
+.balance-detail {
+  padding: 30rpx;
+  background-color:  #e64731;
+  color: #fff;
+  line-height: 130rpx;
+}
+.balance-count {
+  font-size: 78rpx;
+}

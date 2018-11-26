@@ -1,0 +1,16 @@
+<!--components/music-ctrl/music-ctrl.wxml-->
+<view class='music-ctrl' style='display:{{walkmanState}};bottom:{{bottom}}vh'>
+  <icon bindtap='_iconStop' class='iconfont icon-off'></icon>
+  <image class='poster' mode='aspectFill' src='{{coverImgUrl}}'></image>
+  <view class='play-info'>
+    <view>
+      <text class='play-name'>{{title}}</text>
+      <!-- <text class='play-author'>{{singer}}</text> -->
+    </view>
+    <view>
+      <text class='play-time'>{{current}}/{{time}}</text>
+      <progress percent="{{audioPress}}" stroke-width="1" />
+    </view>
+  </view>
+  <icon bindtap='_iconPlay' class='iconfont music-state icon-{{playicon}}'></icon>
+</view>

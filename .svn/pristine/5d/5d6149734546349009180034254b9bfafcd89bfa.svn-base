@@ -1,0 +1,216 @@
+.suggest {
+  background-color: #f5f5f5;
+  padding: 0;
+  margin: 0;
+}
+
+.nav {
+  width: 750rpx;
+  background-color: #fff;
+  padding: 0 0 30rpx;
+}
+
+.section-box {
+  background-color: #fff;
+  padding: 0 30rpx;
+  position: relative;
+}
+
+.section {
+  margin: 20rpx 0 0 0;
+  width: 100%;
+  font-size: 30rpx;
+}
+
+.searchcion {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 30%;
+  z-index: 2;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.section input {
+  width: 100%;
+  background-color: #fafafa;
+  text-align: center;
+  border-radius: 31rpx;
+  line-height: 62rpx;
+  height: 62rpx;
+}
+
+.suggest-swiper {
+  height: 100vh;
+}
+
+.swiper-tab {
+  width: 100%;
+  text-align: center;
+  height: 88rpx;
+  line-height: 88rpx;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  background-color: #fff;
+  font-size: 30rpx;
+}
+
+.swiper-tab scroll-view {
+  white-space: nowrap;
+}
+
+.swiper-tab .navigator-hover {
+  background-color: transparent;
+}
+
+.swiper-tab-item {
+  /* width: 100rpx; */
+  padding: 0 0 0 30rpx;
+  color: #333;
+  display: inline-block;
+  text-align: center;
+}
+
+.active {
+  color: #f65959;
+  border-bottom: 4rpx solid #f65959;
+}
+
+.broadcast {
+  width: 90%;
+  margin: 0 auto;
+  height: 440rpx !important;
+  padding-top: 20rpx;
+}
+
+.broadcast image {
+  width: 100%;
+  border-radius: 15rpx;
+  overflow: hidden;
+}
+
+
+
+
+/* 随身听 */
+
+.walkman {
+  padding-bottom: 20rpx;
+}
+
+.walkman-list {
+  color: #757575;
+  font-size: 32rpx;
+  line-height: 50rpx;
+}
+
+.walkman-list icon {
+  color: #757575;
+  font-size: 36rpx;
+  margin-right: 10rpx;
+}
+.walkman-audio image {
+  width: 35rpx;
+  vertical-align: baseline;
+  margin-right: 10rpx;
+}
+
+/* 热门精品 */
+
+.hot {
+}
+
+.hot image {
+  width: 35rpx;
+  vertical-align: baseline;
+  margin-right: 10rpx;
+}
+.hot-list {
+  padding: 20rpx 0;
+}
+
+.hot-list image {
+  width: 325rpx;
+  height: 270rpx;
+  display: inline-block;
+  float: left;
+  margin: 0 10rpx 10rpx;
+}
+
+/* 新会员专属区  */
+.vip {
+}
+
+.vip-list {
+  padding: 0 0 20rpx 0;
+}
+
+/* 视频学习  */
+
+.video-list navigator {
+  width: 48%;
+  padding: 1%;
+  margin-bottom: 20rpx;
+  text-align: center;
+  float: left;
+}
+
+/* 绘本学习  */
+
+.study {
+}
+
+.study-title {
+  color: #333;
+  font-size: 30rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  line-height: 40rpx;
+}
+
+.study-count {
+  color: #989898;
+  font-size: 24rpx;
+  line-height: 40rpx;
+  text-align: left;
+}
+
+/* 广告弹窗  */
+
+.act-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+.act-modal .act-modal-bg {
+  background: rgba(0, 0, 0, 0.75);
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.act-modal .act-modal-pic {
+  position: fixed;
+  left: 50%;
+  top: 15vh;
+  transform: translateX(-50%);
+  z-index: 1;
+  text-align: center;
+}
+
+.act-modal .act-modal-close {
+  color: #fff;
+  font-size: 88rpx;
+}
+

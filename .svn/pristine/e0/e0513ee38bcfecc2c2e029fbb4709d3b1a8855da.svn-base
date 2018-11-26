@@ -1,0 +1,36 @@
+.mine {}
+.mine-head {
+  position: relative;
+  height: 15vh;
+  background-color: #e64731; 
+  border-radius: 0 0 80% 80%;
+}
+.userinfo {
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  border: 6rpx solid #fff;
+}
+
+.userinfo-nickname {
+  color: #333;
+  font-size: 32rpx;
+}
+.user-motto {
+  color: #838383;
+  font-size: 28rpx;
+}
+ 
+ .tools {
+  margin-top: 22vh;
+}

@@ -1,0 +1,64 @@
+{
+  "pages":[
+    "pages/suggest/suggest",
+    "pages/login/login",
+    "pages/search/search",
+    "pages/picturebook/picturebook",
+    "pages/walkman/walkman",
+    "pages/dynamic/dynamic",
+    "pages/lately/lately",
+    "pages/video/video",
+    "pages/mine/mine",
+    "pages/mine-vip/mine-vip",
+    "pages/mine-balance/mine-balance",
+    "pages/balance-detail/balance-detail",
+    "pages/balance-recharge/balance-recharge",
+    "pages/mine-order/mine-order",
+    "pages/mine-collect/mine-collect",
+    "pages/mine-share/mine-share",
+    "pages/withdraw-cash/withdraw-cash",
+    "pages/share-record/share-record",
+    "pages/setting/setting",
+    "pages/lists/lists",
+    "pages/about/about",
+    "pages/index/index",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#e64731",
+    "navigationBarTitleText": "绘本",
+    "navigationBarTextStyle":"#fff"
+  },
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#e2411f",
+    "borderStyle": "a9b7b7",
+    "list": [
+      {
+        "selectedIconPath": "images/icon_suggest_press.png",
+        "iconPath": "images/icon_suggest.png",
+        "pagePath": "pages/suggest/suggest",
+        "text": "推荐"
+      },
+      {
+        "selectedIconPath": "images/icon_dynamic_press.png",
+        "iconPath": "images/icon_dynamic.png",
+        "pagePath": "pages/dynamic/dynamic",
+        "text": "动态"
+      },
+      {
+        "selectedIconPath": "images/icon_lately_press.png",
+        "iconPath": "images/icon_lately.png",
+        "pagePath": "pages/lately/lately",
+        "text": "最近学习"
+      },
+      {
+        "selectedIconPath": "images/icon_mine_press.png",
+        "iconPath": "images/icon_mine.png",
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  }
+}

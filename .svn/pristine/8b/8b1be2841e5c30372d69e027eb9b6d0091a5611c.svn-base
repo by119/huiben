@@ -1,0 +1,5 @@
+<view class='mine-collect container'>
+  <block wx:for="{{collectData}}">
+    <list id="list" temp="{{item.id}}" img="{{item.img}}" title="{{item.title}}" studyCount="{{item.studyCount}}" lessonCount="{{item.lessonCount}}" studyPrice="{{item.studyPrice}}"></list>
+  </block>
+</view>

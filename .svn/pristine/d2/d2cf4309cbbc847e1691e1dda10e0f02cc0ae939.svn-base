@@ -1,0 +1,106 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.2.2",
+	"appid": "wx5106c3ac05268f03",
+	"projectname": "huiben",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 8,
+			"list": [
+				{
+					"id": -1,
+					"name": "login",
+					"pathName": "pages/login/login",
+					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "list",
+					"pathName": "pages/lists/lists",
+					"query": ""
+				},
+				{
+					"id": 3,
+					"name": "listnews",
+					"pathName": "pages/dynamic/dynamic",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "vip",
+					"pathName": "pages/mine-vip/mine-vip",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "search",
+					"pathName": "pages/search/search",
+					"query": ""
+				},
+				{
+					"id": 14,
+					"name": "set",
+					"pathName": "pages/setting/setting",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "record",
+					"pathName": "pages/share-record/share-record",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "mineshare",
+					"pathName": "pages/mine-share/mine-share",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "mine",
+					"pathName": "pages/mine/mine",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "coupon",
+					"pathName": "pages/coupon/coupon",
+					"query": ""
+				},
+				{
+					"id": 10,
+					"name": "coupons",
+					"pathName": "pages/coupon-list/coupon-list",
+					"query": ""
+				}
+			]
+		}
+	}
+}

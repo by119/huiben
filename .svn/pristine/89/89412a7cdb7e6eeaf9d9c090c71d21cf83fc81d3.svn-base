@@ -1,0 +1,36 @@
+<view class='dynamic container'>
+  <view class="swiper-tab">
+    <view class="swiper-tab-item"></view>
+    <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">新闻动态</view>
+    <view class="swiper-tab-item"></view>
+    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">通知</view>
+    <view class="swiper-tab-item"></view>
+  </view>
+  <view class='dynamic-content'>
+    <block wx:if="{{dynamicData&&dynamicData.length}}">
+      <view class='news-head'></view>
+      <scroll-view class='news' scroll-y="true">
+        <block wx:for="{{dynamicData}}" wx:key="{{index}}">
+          <list-news id="listNews" temp="{{item.id}}" title="{{item.title}}" explain="{{item.content}}" time="{{item.create_time}}" img="{{item.pic_url}}" pageUrl="{{pageUrl}}"></list-news>
+        </block>
+        <!-- <view class='del-lesson'>
+             <icon class='iconfont icon-del'></icon>清空学习记录 
+            </view> -->
+      </scroll-view>
+      
+      <view class="has-more">
+        <view wx:if="{{hasMore}}">
+          <icon type="waiting" size="25" />
+          <text> 努力加载中...</text>
+        </view>
+        <view wx:else>
+          <text>没有更多内容了</text>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <list-null></list-null>
+    </block>
+  </view>
+
+</view>

@@ -1,0 +1,17 @@
+.record-list {
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f6f6f6;
+}
+.record-title {
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 28rpx;
+  line-height: 60rpx;
+}
+.record-title text {
+  color:#999;
+  font-size:26rpx;
+  line-height: 50rpx;
+}

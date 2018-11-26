@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "百科英语",
+  "usingComponents": {
+    "music-ctrl": "/components/music-ctrl/music-ctrl"
+  }
+}

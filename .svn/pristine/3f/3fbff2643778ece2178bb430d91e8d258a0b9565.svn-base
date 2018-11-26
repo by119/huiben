@@ -1,0 +1,58 @@
+.mine-share {}
+.share-head {
+  padding: 30rpx;
+  height: 400rpx;
+  background-color: #e64731;
+}
+.mine-info {
+  padding-bottom: 50rpx; 
+  border-bottom: 4rpx solid #f08b7f;
+  margin-bottom: 30rpx;
+}
+.mine-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  border: 4rpx solid #fff;
+  float: left;
+  margin-right: 30rpx;
+}
+.mine-txt {
+  font-size: 30rpx;
+  color: #fff;
+  line-height: 60rpx;
+  float: left;
+}
+.mine-txt text{
+  width: 500rpx;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.mine-name {}
+.mine-name-big {
+  line-height: 128rpx;
+  font-size: 34rpx;
+}
+.mine-referee {
+  font-size: 28rpx;
+}
+.mine-cash {
+  position: relative;
+  width: 100%;
+}
+
+.withdraw {
+  position: absolute;
+  right: 0;
+  top: 15rpx;
+  color: #f08b7f;
+  background-color: #fff;
+  font-size: 30rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  box-shadow: unset;
+  border: unset;
+  line-height: unset;
+}

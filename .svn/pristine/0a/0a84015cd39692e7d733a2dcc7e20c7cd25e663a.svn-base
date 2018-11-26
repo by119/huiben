@@ -1,0 +1,20 @@
+
+const Trequest = require('../../static/js/request.js');
+Page({
+  data: {
+    recordList:[]
+  },
+  onLoad: function (options) {
+    // 推广记录
+    var that = this;
+    Trequest({
+      url: 'distribution_log/getlist',
+      data: {},
+      callback(res) {
+        that.setData({
+          recordList: res.data.data
+        })
+      }
+    });
+  },
+})

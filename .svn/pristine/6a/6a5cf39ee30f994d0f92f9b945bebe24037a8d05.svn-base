@@ -1,0 +1,124 @@
+<view class='suggest container'>
+  <view class='section-box'>
+    <view class="section" bindtap="toSearch">
+      <icon class="searchcion" size='18' type='search'></icon>
+      <input disabled placeholder="搜索你喜欢的" value="{{seachVal}}" />
+    </view>
+  </view>
+  <view class="swiper-tab">
+    <scroll-view scroll-x="true">
+      <block wx:for="{{swiperTab}}">
+        <view class="swiper-tab-item {{currentTab==index?'active':''}}" data-current="{{index}}" data-current-id="{{item.id}}" bindtap="clickTab">{{item.name}}</view>
+      </block>
+    </scroll-view>
+  </view>
+  <!-- <swiper class='suggest-swiper' current="{{currentTab}}" duration="300" bindchange="swiperTab"> -->
+  <!-- <swiper-item> -->
+  <scroll-view style='height:100%;margin: 0' scroll-y="true">
+    <view class='nav'>
+      <swiper class='broadcast' indicator-dots="true" indicator-color="rgba(0, 0, 0, .3)" indicator-active-color="#fff" autoplay="true" interval="3000" duration="1000">
+        <block wx:for="{{imgUrls}}">
+          <swiper-item>
+            <image mode="widthFix" src="{{item}}" class="slide-image" />
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class='nav-list clearfix'>
+        <navigator wx:for="{{navList}}" url="/pages/lists/lists?gc_id={{item.id}}&title={{item.name}}">
+          <image mode='widthFix' src="{{imgHost}}{{item.icon}}" />
+          <view>{{item.name}}</view>
+        </navigator>
+      </view>
+    </view>
+    <view class='walkman whole'>
+      <navigator url='/pages/walkman/walkman'>
+        <view class='whole-title'>
+          随身听
+          <view class='whole-more'>
+            <text>更多</text>
+            <icon class="iconfont icon-more tool-more"></icon>
+          </view>
+        </view>
+      </navigator>
+      <view class='walkman-list'>
+        <block wx:for="{{walkmanList}}">
+          <view class='walkman-audio' data-poster="{{item.poster}}" data-name="{{item.title}}" data-src="{{item.radio_url}}" bindtap='palyMusic'>
+            <icon class="iconfont icon-playicon"></icon>
+            <text>{{item.title}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+    <view class='hot whole'>
+      <view class='whole-title'>
+        热门精品
+        <icon class="iconfont icon-hot"></icon>
+        <view class='whole-more'>
+          <text>更多</text>
+          <icon class="iconfont icon-more tool-more"></icon>
+        </view>
+      </view>
+      <view class='hot-list clearfix'>
+        <view>
+          <image src="/images/icon_suggest.png" />
+        </view>
+        <view>
+          <image src="/images/icon_suggest.png" />
+        </view>
+        <view>
+          <image src="/images/icon_suggest.png" />
+        </view>
+        <view>
+          <image src="/images/icon_suggest.png" />
+        </view>
+      </view>
+    </view>
+    <view class='vip whole'>
+      <view class='whole-title'>
+        新会员专属区
+        <icon class="iconfont icon-hot"></icon>
+        <view class='whole-more'>更多></view>
+      </view>
+      <view class='vip-list clearfix'>
+        <image mode='aspectFill' style='width:335rpx;height:340rpx;float:left;margin:5rpx;' src="/images/demo.png" />
+        <image mode='aspectFill' style='width:280rpx;height:170rpx;float:left;margin:5rpx;' src="/images/demo.png" />
+        <image mode='aspectFill' style='width:180rpx;height:170rpx;float:left;margin:5rpx;' src="/images/demo.png" />
+      </view>
+    </view>
+    <view class='study whole'>
+      <view class='whole-title'>
+        绘本学习
+        <view class='whole-more'>更多></view>
+      </view>
+      <view class='vip-list'></view>
+    </view>
+  </scroll-view>
+  <!-- </swiper-item> -->
+  <!-- <swiper-item><view>少儿</view></swiper-item>
+      <swiper-item><view>商业</view></swiper-item>
+      <swiper-item><view>旅游</view></swiper-item>
+      <swiper-item><view>时尚</view></swiper-item>
+      <swiper-item><view>新闻</view></swiper-item>
+      <swiper-item><view>娱乐</view></swiper-item>
+      <swiper-item><view>魔术</view></swiper-item> -->
+  <!-- </swiper> -->
+</view>
+<view class='mask' hidden='{{maskFlag}}'>
+  <image src='/images/vippic.png'></image>
+  <icon type='cancel' style='color:#fff;' class='iconfont' bindtap='showFlag'></icon>
+</view>
+<view class='music-ctrl' style='display:{{walkmanState}}'>
+  <icon bindtap='iconStop' class='iconfont icon-off'></icon>
+  <image class='poster' mode='widthFix' src='{{walkmanPlay.poster}}'></image>
+  <view class='play-info'>
+    <view>
+      <text class='play-name'>{{walkmanPlay.name}}</text>
+      <text class='play-author'>{{walkmanPlay.author}}    </text>
+    </view>
+    <view>
+      <text class='play-time'>{{walkmanPlay.current}}/{{walkmanPlay.time}}</text>
+      <progress percent="{{audioPress}}" stroke-width="1" />
+    </view>
+  </view>
+  <icon bindtap='iconPlay' class='iconfont music-state icon-{{playicon}}'></icon>
+</view>

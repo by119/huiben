@@ -1,0 +1,11 @@
+<!--components/list-news/list-news.wxml-->
+<view class='list-news'>
+  <navigator url='/pages/video/video?id={{temp}}'>
+    <image mode='aspectFill' src="{{img}}"></image>
+    <view class='list-content'>
+      <text class='list-title'>{{title}}</text>
+      <text class='list-explain'>{{explain}}</text>
+      <text class='list-time'>{{time}}</text>
+    </view>
+  </navigator>
+</view>

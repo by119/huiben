@@ -1,0 +1,4 @@
+<!--pages/share-code/share-code.wxml-->
+<view class='share-code container'>
+  <image bindtap='saveImg' class='my-code' src='{{codeImg}}'></image>
+</view>

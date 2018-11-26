@@ -1,0 +1,43 @@
+var app = getApp();
+const Trequest = require('../../static/js/request.js');
+
+Page({
+  data: {
+    imgHost: 'http://huiben.fengsh.cn/',
+    vipList: [],
+    currentTab:0,
+    info: {
+      img: '/images/demo.png',
+      name: 'Fang',
+      level: 'VIP2'
+    },
+    vipBuy: {
+      time: '6个月',
+      price: 40,
+      cost: 100
+    }
+  },
+  onLoad: function(options) {
+    var that = this;
+    // 用户vip
+    Trequest({
+      url: 'user_vip_level/getlist',
+      data: {},
+      callback(res) {
+        console.log(res.data);
+        that.setData({
+          vipList:res.data
+        })
+      }
+    });
+  },
+  swiperTab: function(e){
+    this.setData({
+      currentTab: e.detail.current
+    });
+    console.log('切换',this.data.currentTab)
+  },
+  vipBuy: function() {
+    console.log('立即购买');
+  }
+})

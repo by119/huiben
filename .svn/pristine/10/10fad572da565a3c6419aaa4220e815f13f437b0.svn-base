@@ -1,0 +1,30 @@
+var innerAudio = wx.getBackgroundAudioManager(); 
+Page({
+  data: {
+    walkmanData:[{
+      time: '7月27日',
+      list:[{
+        url: '',
+        text:'共我泼茶人，如今在哪方'
+      }, {
+        url: '',
+        text: '共我泼茶人，如今在哪方'
+      }, {
+        url: '',
+        text: '共我泼茶人，如今在哪方'
+      }]
+    },{
+      time: '7月27日',
+      list:[{
+        url: '',
+        text:'共我泼茶人，如今在哪方'
+      }, {
+        url: '',
+        text: '共我泼茶人，如今在哪方'
+      }]
+    }]
+  },
+  onLoad: function (options) {
+    console.log('walkman',innerAudio);
+  },
+})

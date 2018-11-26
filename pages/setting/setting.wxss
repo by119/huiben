@@ -1,0 +1,10 @@
+/* pages/setting/setting.wxss */
+.phonebtn {
+  background-color: #fff;
+  border: unset;
+  border-radius: 0;
+  text-align: left;
+}
+button::after{
+  border: unset;
+}

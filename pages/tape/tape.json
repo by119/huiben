@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "学说话",
+  "usingComponents": {
+    "music-ctrl": "/components/music-ctrl/music-ctrl"
+  }
+}

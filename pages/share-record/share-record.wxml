@@ -1,0 +1,34 @@
+<view class='share-record container'>
+  <block wx:if="{{recordList&&recordList.length>0}}">
+  <scroll-view class="record-list-box" scroll-y="true">
+    <view wx:for="{{recordList}}" wx:key="index" class='record-list clearfix'>
+      <view class='record-title'>
+        <view style='float:left'>
+          推广人：
+          <text>{{item.user.nickname}}</text>
+        </view>
+        <view style='float:right'>
+          推广人号码：
+          <text>{{item.user.tel}}</text>
+        </view>
+      </view>
+      <view class='record-title'>
+        推广时间：
+        <text style='float:right'>{{item.create_time}}</text>
+      </view>
+    </view>
+    </scroll-view>
+  <view class="has-more">
+    <view wx:if="{{hasMore}}">
+      <icon type="waiting" size="25" />
+      <text> 努力加载中...</text>
+    </view>
+    <view wx:else>
+      <text>没有更多内容了</text>
+    </view>
+  </view>
+  </block>
+  <block wx:else>
+    <list-null></list-null>
+  </block>
+</view>

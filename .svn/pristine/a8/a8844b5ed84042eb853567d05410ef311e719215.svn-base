@@ -1,0 +1,33 @@
+<view class='search container'>
+  <view class="section clearfix">
+    <icon class="searchcion" size='18' type='search' style='display:{{searchState}}'></icon>
+    <input type="text" confirm-type="search" placeholder="搜索你喜欢的" value="{{seachVal}}" bindinput='searchStateFn' bindconfirm="searchEnt" auto-focus></input>
+    <text bindtap='cancel'>取消</text>
+  </view>
+  <view class='search-history clearfix'>
+    <view class='search-title'>
+      <text>搜索历史</text>
+      <icon class="iconfont icon-del" bindtap='delHistory'></icon>
+    </view>
+    <view>
+      <block wx:if="{{historyLists&&historyLists.length}}">
+        <block wx:for="{{historyLists}}" wx:key="index">
+          <navigator class='search-list' url='/pages/lists/lists?title={{item}}&more=0'>{{item}}</navigator>
+        </block>
+      </block>
+      <block wx:else>
+        <view class='null'>还没有搜索记录哦~</view>
+      </block>
+    </view>
+  </view>
+  <view class='search-hot'>
+    <view class='search-title'>
+      <text>热门搜索</text>
+    </view>
+    <view>
+      <block wx:for="{{hotLists}}" wx:key="index">
+        <navigator class='search-list' url='/pages/lists/lists?title={{item.keyword}}&more=0'>{{item.keyword}}</navigator>
+      </block>
+    </view>
+  </view>
+</view>

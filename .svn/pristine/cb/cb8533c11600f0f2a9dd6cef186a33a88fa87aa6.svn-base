@@ -1,0 +1,64 @@
+const Trequest = require('../../static/js/request.js'),
+  a = getApp();
+
+Page({
+  data: {
+    list: [],
+    status: 0
+  },
+  onLoad: function(t) {
+    var userInfo = wx.getStorageSync('user_info').data;
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=coupon&id=" + t.id
+      });
+      return false;
+    }
+    this.setData({
+      userInfo: userInfo
+    })
+    var that = this;
+    if (t.id) {
+      Trequest({
+        url: 'promo_code_log/add',
+        data: {
+          pc_id: t.id
+        },
+        callback(res) {
+          console.log(res);
+          if (res.data.code == 0) {
+            wx.showToast({
+              title: '领取成功',
+              icon: 'success'
+            })
+          } else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
+          }
+        }
+      });
+    }
+    this.getcoupon();
+  },
+  getcoupon: function(e) {
+    var that = this;
+    if (e) {
+      that.setData({
+        status: e.currentTarget.dataset.status
+      })
+    }
+    Trequest({
+      url: 'promo_code_log/getlist',
+      data: {
+        status: that.data.status
+      },
+      callback(res) {
+        that.setData({
+          list: res.data.data
+        })
+      }
+    });
+  }
+});

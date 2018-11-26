@@ -1,0 +1,40 @@
+// pages/search/search.js
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    searchState: 'block',
+    historyLists: ['旅游', '教程', '搜索', '历史', 'ko', '数据', '哈哈哈', '呵'],
+    hotLists: ['旅游', '教程', '搜索', '历史', 'ko', '数据', '哈哈哈', '呵']
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+  
+  },
+  //搜索框搜索图标显隐
+  searchStateFn: function(options) {
+    // console.log(options, options.detail.value);
+    if (options.detail.value){
+      this.setData({
+        searchState: 'none'
+      })
+    } else {
+      this.setData({
+        searchState: 'block'
+      })
+    }
+  },
+  cancel: function(){
+    wx.navigateBack();
+  },
+  delHistory: function(){
+    console.log('删除历史记录');
+    
+  }
+
+})

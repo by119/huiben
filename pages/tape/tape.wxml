@@ -1,0 +1,26 @@
+<!--pages/tape.wxml-->
+<view class='tape container'>
+  <view class='tape-top'>
+    <image mode='widthFix' src="{{tapeData.pic_url}}" class="slide-image">
+      <rich-text class='content' nodes="{{tapeData.content}}"></rich-text>
+      <icon class='iconfont icon-horn {{hornCss}}' bindtap='playRadio'></icon>
+    </image>
+  </view>
+  <view class="translate">
+    <rich-text nodes="{{tapeData.translation}}"></rich-text>
+  </view>
+  <view class='tape-content'>
+    <view class='change-tape' bindtap='changeTape'>
+      <icon class='iconfont icon-change'></icon>
+      <text>换一组</text>
+    </view>
+    <text class='rerecord' bindtap='rerecord' wx:if="{{playState}}">重录</text>
+    <icon wx:if="{{!playState}}" class='iconfont tape-btn icon-tape {{tapeCss}}' bindtap='tapeTap' bindlongpress='playReord' bindtouchend='stopRecord'></icon>
+
+    <icon wx:if="{{playState}}" class='iconfont tape-btn icon-{{playIcon}}-e' bindtap='playTape'></icon>
+  </view>
+  <view class='tape-txt'>
+    <text>{{tapeTxt}}</text>
+  </view>
+
+</view>

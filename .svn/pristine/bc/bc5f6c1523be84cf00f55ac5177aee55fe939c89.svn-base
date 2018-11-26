@@ -1,0 +1,53 @@
+/* pages/preference/preference.wxss */
+
+.preference {
+  padding: 30rpx;
+}
+
+.title {
+  font-size: 40rpx;
+  text-align: center;
+  font-weight: 600;
+  margin: 5vh 0 1vh 0;
+  color: #191919;
+}
+
+.tip {
+  font-size: 28rpx;
+  text-align: center;
+  color: #6f6f6f;
+}
+
+.tag-box {
+  width: 690rpx;
+  /* height: 60vh; */
+  min-height: 60vh;
+  margin-top: 4vh;
+  overflow-y: scroll;
+}
+
+.tag {
+  display: inline-block;
+  border: 1rpx solid red;
+  text-align: center;
+  font-size: 28rpx;
+  border-radius: 60rpx;
+  line-height: 60rpx;
+  width: 150rpx;
+  margin: 30rpx 9rpx;
+}
+
+.btn {
+  width: 100%;
+  border-radius: 7vh;
+  line-height: 7vh;
+  text-align: center;
+  background-color: #ddd;
+  margin-top: 6vh;
+  color: #a5a5a5;
+  font-size: 40rpx;
+}
+.add-btn {  
+  color: #fff;
+  background-color: #e64731;
+} 

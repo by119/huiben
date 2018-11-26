@@ -1,0 +1,10 @@
+<view class='mine-collect container'>
+  <block wx:if="{{collectData&&collectData.length}}">
+    <block wx:for="{{collectData}}" wx:key="index">
+      <list id="list" temp="{{item.id}}" img="{{item.pic_url}}" title="{{item.title}}" studyCount="{{item.learn_times_text}}" lessonCount="{{item.goods_item_count}}" pageUrl="{{pageUrl}}"></list>
+    </block>
+  </block>
+  <block wx:else>
+    <list-null></list-null>
+  </block>
+</view>

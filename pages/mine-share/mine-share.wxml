@@ -1,0 +1,58 @@
+<view class='mine-share container'>
+  <view class='share-head'>
+    <view class='mine-info clearfix'>
+      <image mode='aspectFill' class='mine-avatar' src='{{userInfo.avatar}}'></image>
+      <view class='mine-txt'>
+        <block wx:if="{{userInfo.parentUser}}">
+          <text class='mine-name'>{{userInfo.nickname}}</text>
+          <text class='mine-referee'>推荐人：{{userInfo.parentUser.nickname}}</text>
+        </block>
+        <block wx:else>
+          <text class='mine-name-big'>{{userInfo.nickname}}</text>
+        </block>
+      </view>
+    </view>
+    <view class='mine-txt mine-cash clearfix'>
+      <text>可提现佣金</text>
+      <text>{{money}}</text>
+      <button class='withdraw' bindtap='withdrawFn'>提现</button>
+    </view>
+  </view>
+  <view class='tools'>
+    <navigator class='tool-pane' url='../share-record/share-record'>
+      <icon class="iconfont icon-share-detail tool-icon" style='color:#E7BE37'></icon>
+      <view>推广记录</view>
+    </navigator>
+    <view class='tool-pane' data-src="codeImg" bindtap='saveCode' >
+      <icon class="iconfont icon-code tool-icon" style='color:#87D87B'></icon>
+      <view>推广二维码</view>
+    </view>
+    <button class='tool-pane share-btn' style='border-right:0' open-type='share'>
+      <icon class="iconfont icon-friend tool-icon" style='color:#F79055'></icon>
+      <view>分享好友</view>
+    </button>
+    <navigator class='tool-pane' style='border-bottom: 0;' url='../withdraw-cash/withdraw-cash'>
+      <icon class="iconfont icon-withdraw tool-icon" style='color:#F8475F'></icon>
+      <view>提现明细</view>
+    </navigator>
+    <view class='tool-pane' style='border-bottom: 0;'></view>
+  </view>
+    <!-- <view bindtap='saveCode' class='tool'>
+      <text>推广二维码</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </view>
+
+    <navigator class='tool' url='../share-record/share-record'>
+      <text>推广记录</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </navigator>
+
+    <navigator class='tool' url='../withdraw-cash/withdraw-cash'>
+      <text>提现记录</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </navigator>
+    <button class='tool share-btn' open-type='share'>
+      <text>分享好友</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </button> -->
+</view>

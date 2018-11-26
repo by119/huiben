@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "最近学习",
+  "usingComponents": {
+    "list-news": "/components/list-news/list-news"
+  }
+  
+}

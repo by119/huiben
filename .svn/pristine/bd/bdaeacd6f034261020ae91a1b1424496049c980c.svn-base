@@ -1,0 +1,10 @@
+<view class='mine-collect container'>
+<view wx:if="{{collectData}}">
+  <block wx:for="{{collectData}}">
+    <list id="list" img="{{item.img}}" temp="{{item.id}}" title="{{item.title}}" studyCount="{{item.studyCount}}" lessonCount="{{item.lessonCount}}" studyPrice="{{item.studyPrice}}"></list>
+  </block>
+</view>
+<view wx:else>
+  <text>还没有没有收藏任何课程</text>
+</view>
+</view>

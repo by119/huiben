@@ -1,0 +1,59 @@
+<view class="top-bar flex-row">
+  <view class="flex-grow-1 {{status==0?'active':''}}" data-status='0' bindtap='getcoupon'>
+    <text>未使用</text>
+  </view>
+  <view class="flex-grow-1 {{status==2?'active':''}}" data-status='2' bindtap='getcoupon'>
+    <text>已使用</text>
+  </view>
+  <view class="flex-grow-1 {{status==3?'active':''}}" data-status='3' bindtap='getcoupon'>
+    <text>已过期</text>
+  </view>
+</view>
+<view wx:if="{{list&&list.length>0}}">
+  <scroll-view class="coupon-list">
+    <block wx:for="{{list}}" wx:for-item="coupon" wx:key="idnex">
+      <view class="coupon-item coupon-status-{{status}}" style="margin-top:20rpx;">
+        <image class="coupon-bg" src="/images/img-coupon-bg-{{status==0?0:1}}.png"></image>
+        <image class="coupon-status-icon" src="/images/img-coupon-status-icon-{{status}}.png" wx:if="{{status!=0}}"></image>
+        <view class="flex-row" style="height: 100%;overflow: hidden">
+          <view class="flex-grow-0 flex-col flex-y-center flex-x-center coupon-left">
+            <view wx:if="{{coupon.promo_code.discount>0}}" class="flex-row flex-y-bottom">
+              <view style="font-size: {{coupon.promo_code.discount.length>4?'15':'17'}}pt;line-height: .9">
+                {{coupon.promo_code.discount}}
+              </view>
+              <view style="font-size: 9pt">折</view>
+            </view>
+            <view wx:else class="flex-row flex-y-bottom">
+              <view style="font-size: 9pt">￥</view>
+              <view style="font-size: {{coupon.promo_code.amount.length>4?'15':'17'}}pt;line-height: .9">
+                {{coupon.promo_code.amount}}
+              </view>
+            </view>
+          </view>
+          <view class="flex-grow-1 flex-y-center coupon-right">
+            <view style="width:100%;">
+              <view class="flex-row flex-y-center mb-10" style="margin-bottom:5rpx;">
+                <view class="flex-grow-1" style="font-size: 11pt;">{{coupon.promo_code.msg}}</view>
+              </view>
+              <view style="font-size: 8pt;color: #666666">{{coupon.promo_code.start_date}} ~ {{coupon.promo_code.end_date}}</view>
+              <text class="user_coupon_font">全场通用</text>
+              <text class="user_coupon_font" style='margin-left:15rpx;' wx:if="{{coupon.promo_code.discount<=0}}">满{{coupon.promo_code.man}}减{{coupon.promo_code.amount}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+  <view class="has-more">
+    <view wx:if="{{hasMore}}">
+      <icon type="waiting" size="25" />
+      <text> 努力加载中...</text>
+    </view>
+    <view wx:else>
+      <text>没有更多内容了</text>
+    </view>
+  </view>
+</view>
+<view style="padding-top: 200rpx;color: #888;text-align: center" wx:else>
+  <list-null></list-null>
+</view>

@@ -1,0 +1,14 @@
+<!--pages/setting/setting.wxml-->
+<view class='tools'>
+  <!-- <view  class='tool'>
+      <text>清空缓存数据</text>
+    </view> -->
+  <button class='tool phonebtn' open-type="getPhoneNumber" bindgetphonenumber='getPhoneNumber'>
+    <text>绑定手机号码</text>
+    <icon class="iconfont icon-more tool-more"></icon>
+  </button>
+  <navigator class='tool' url='/pages/about/about?id=1'>
+    <text>关于</text>
+    <icon class="iconfont icon-more tool-more"></icon>
+  </navigator>
+</view>

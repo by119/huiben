@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "搜索结果",
+  "usingComponents": {
+    "list": "/components/list/list",
+    "list-news": "/components/list-news/list-news",
+    "list-null": "/components/list-null/list-null"
+  }
+}

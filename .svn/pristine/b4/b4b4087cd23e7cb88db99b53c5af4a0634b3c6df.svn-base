@@ -1,0 +1,24 @@
+<view wx:if="{{list.length>0}}">
+  <scroll-view class="income-list" scroll-y="true">
+    <view class="income-one" wx:for="{{list}}" wx:key="index">
+      <view class="income-road">{{item.status_text}}</view>
+      <view class="flex-row">
+        <view class="flex-grow-1" style="color:#04BE01;font-size:28rpx;">-{{item.amount}}</view>
+        <view class="flex-grow-0" style="color:#999;font-size:26rpx;margin-top:6rpx;">{{item.create_time}}</view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="has-more">
+    <view wx:if="{{hasMore}}">
+      <icon type="waiting" size="25" />
+      <text> 努力加载中...</text>
+    </view>
+    <view wx:else>
+      <text>没有更多内容了</text>
+    </view>
+  </view>
+</view>
+
+<view wx:else>
+  <list-null></list-null>
+</view>

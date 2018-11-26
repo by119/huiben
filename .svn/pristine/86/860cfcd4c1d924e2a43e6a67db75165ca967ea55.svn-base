@@ -1,0 +1,20 @@
+
+const Trequest = require('../../static/js/request.js');
+Page({
+  data: {
+    balanceCount: '90.00'
+  },
+  onLoad: function (options) {
+    var that = this;
+    // 用户vip
+    Trequest({
+      url: 'user_vip_level/getlist',
+      data: {
+        id: 1
+      },
+      callback(res) {
+        console.log(res);
+      }
+    });
+  },
+})

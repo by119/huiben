@@ -1,0 +1,16 @@
+/* components/list-null.wxss */
+.list-null {
+    width: 100%; 
+    text-align: center;
+}
+.list-null image {
+   width: 200rpx; 
+   height: 200rpx;
+   margin: 20vh auto 10rpx; 
+}
+.list-null text {
+  display: block;
+  color: #9b9b9b;
+  font-size: 30rpx;
+  text-align: center;
+}

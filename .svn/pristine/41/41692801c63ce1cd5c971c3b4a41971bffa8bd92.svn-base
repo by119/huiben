@@ -1,0 +1,47 @@
+
+const Trequest = require('../../static/js/request.js')
+Page({
+  data: {
+    pageUrl:'/pages/video/video',
+    collectData: []
+  },
+  onLoad: function (options) {
+    // console.log(options);
+    if (options.subject_id){
+      // 列表接口   subject_id：视听读列表    title：搜索    gc_id：固定课程
+    // 视频学习 subject_id=2
+    // 音频学习 subject_id=3
+    // 绘本学习 subject_id=4
+      this.lessonList({ subject_id: options.subject_id });
+    } 
+    if (options.gc_id) {
+      this.lessonList({ gc_id: options.gc_id });
+    }
+     if (options.title) {
+      this.lessonList({ title: options.title });
+      wx.setNavigationBarTitle({
+        title: options.title
+      })
+    } else {
+      wx.setNavigationBarTitle({
+        title: '课程列表'
+      })
+    }
+
+
+  },
+  lessonList:function(temp){
+    temp.no_item = 1;
+    var that = this;
+    // 列表接口   subject_id：视听读列表    title：搜索    gc_id：固定课程
+    Trequest({
+      url: 'goods/getlist',
+      data: temp,
+      callback(res) {
+        that.setData({
+          collectData:res.data.data
+        })
+      }
+    });
+  }
+})

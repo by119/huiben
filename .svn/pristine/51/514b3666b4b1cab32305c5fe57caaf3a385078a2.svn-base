@@ -1,0 +1,71 @@
+
+Page({
+  data: {
+    info: {
+      img:'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+      name: 'Fang',
+      referee: '啦啦啦',
+      mineCash: '100.00'
+    },
+    posterConfig: {
+      width: 750,
+      height: 1200,
+      backgroundColor: 'pink',
+      debug: false,
+      texts: [{
+        x: 375,
+        y: 1050,
+        width: 750,
+        textAlign: 'center',
+        text: '小程序码',
+        fontSize: 30,
+        color: '#fff',
+        zIndex: 2
+      }],
+      images: [
+        {
+          x: 0,
+          y: 0,
+          url: 'https://thumbnail0.baidupcs.com/thumbnail/063e842e885015954643a9ab274b536d?fid=1739374861-250528-725505452552091&time=1535072400&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-dDMH7sfBjwxir%2BVmiLBz15YPF5w%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=5459966670446048593&dp-callid=0&size=c710_u400&quality=100&vuk=-&ft=video',
+          width: 750,
+          height: 1200,
+          borderColor: '#000',
+          zIndex: 1
+        }, {
+          x: 302,
+          y: 230,
+          url: 'http://lc-I0j7ktVK.cn-n1.lcfile.com/02bb99132352b5b5dcea.jpg',
+          width: 146,
+          height: 146,
+          borderRadius: 2,
+          borderWidth: 5,
+          borderColor: '#fff',
+          zIndex: 2
+        },
+        {
+          x: 260,
+          y: 750,
+          url: 'http://lc-I0j7ktVK.cn-n1.lcfile.com/02bb99132352b5b5dcea.jpg',
+          width: 230,
+          height: 230,
+          borderColor: '#000',
+          zIndex: 2
+        },
+      ],
+    }
+  },
+  onLoad: function (options) {
+
+  },
+
+  onPosterSuccess(e) {
+    const { detail } = e;
+    wx.previewImage({
+      current: detail,
+      urls: [detail]
+    })
+  },
+  onPosterFail(err) {
+    console.error(err);
+  }
+})

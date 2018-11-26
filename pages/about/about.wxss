@@ -1,0 +1,6 @@
+/* pages/about/about.wxss */
+
+.wxParse-p image {
+  margin-left: 0;
+  margin-right: 0;
+}

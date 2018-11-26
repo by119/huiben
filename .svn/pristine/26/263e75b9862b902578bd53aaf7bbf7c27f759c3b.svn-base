@@ -1,0 +1,6 @@
+/* pages/nav-more/nav-more.wxss */
+
+.nav-list navigator {
+  width: 152.5rpx;
+  margin: 0 10rpx;
+}

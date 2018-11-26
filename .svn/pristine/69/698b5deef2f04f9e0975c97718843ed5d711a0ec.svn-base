@@ -1,0 +1,21 @@
+
+const Trequest = require('../../static/js/request.js')
+Page({
+  data: {
+    collectData: []
+  },
+  onLoad: function (options) {
+    var that = this;
+    Trequest({
+      url: 'collection/getlist',
+      data: {},
+      callback(res) {
+        console.log(res);
+        that.setData({
+          collectData:res.data.data
+        })
+      }
+
+    });
+  },
+})

@@ -1,0 +1,33 @@
+
+Page({
+  data: {
+    collectData: [{
+        id: 102,
+        img:'/images/demo.png',
+        title:'5招让你轻松学英语呀呀呀呀呀',
+        studyCount: '20万',
+        lessonCount: '20',
+        studyPrice: '90',
+    }, {
+        id: 104,
+        img: '/images/demo.png',
+        title: '5招让你轻松学英语',
+        studyCount: '20万',
+        lessonCount: '130',
+        studyPrice: '90'
+      }, {
+        id: 112,
+        img: '/images/null.png',
+        title: '5招让你轻松学英语呀呀呀呀呀呀呀呀',
+        studyCount: '13万',
+        lessonCount: '230',
+        studyPrice: '210'
+    }]
+  },
+  onLoad: function (options) {
+    console.log(options);
+    wx.setNavigationBarTitle({
+      title: options.title
+    })
+  },
+})

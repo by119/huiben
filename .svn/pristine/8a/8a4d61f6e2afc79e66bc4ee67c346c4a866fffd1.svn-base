@@ -1,0 +1,23 @@
+
+const Trequest = require('../../static/js/request.js');
+var n = getApp(), e = require("../../wxParse/wxParse.js");
+Page({
+  data: {},
+  onLoad: function (options) {
+    var that = this;
+    Trequest({
+      url: 'article/detail',
+      data: {
+        id: 1
+      },
+      callback(t) {
+        console.log(t);
+        wx.setNavigationBarTitle({
+          title: t.data.title
+        });
+        e.wxParse("content", "html", t.data.content, that,5);
+      }
+
+    });
+  },
+})

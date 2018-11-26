@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "推广记录",
+  "usingComponents": {
+    "list-null": "/components/list-null/list-null"
+  }
+}

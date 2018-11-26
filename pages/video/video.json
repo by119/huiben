@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "课程介绍",
+  "usingComponents": {
+    "music-ctrl": "/components/music-ctrl/music-ctrl"
+  }
+}

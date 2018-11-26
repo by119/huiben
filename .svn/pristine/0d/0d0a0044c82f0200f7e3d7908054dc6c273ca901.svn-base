@@ -1,0 +1,171 @@
+// components/music-ctrl/music-ctrl.js
+Component({
+  /**
+   * 组件的属性列表
+   */
+  properties: {
+    title: {
+      type: String,
+      value: '此时此刻1'
+    },
+    walkmanState :{
+      type:String,
+      value:'none'
+    },
+    coverImgUrl:{
+      type:String,
+      value:'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000'
+    },
+    singer:{
+      type:String,
+      value:'许巍'
+    },
+    epname:{
+      type:String,
+      value:'此时此刻2'
+    },
+    current: {
+      type: String,
+      value: '0:0'
+    },
+    time: {
+      type: String,
+      value: '0:0'
+    },
+    audioPress: {
+      type: Number,
+      value: 0
+    },
+    playicon: {
+      type: String,
+      value: 'play'
+    }
+    
+  },
+
+  created() {
+    
+  },
+  /**
+   * 组件的初始数据
+   */
+  data: {
+
+  },
+
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+    createAudio: function () {
+      var innerAudio = wx.getBackgroundAudioManager(); 
+      innerAudio.src = this.data.walkmanPlay.src;
+      innerAudio.title = this.data.walkmanPlay.name;
+      innerAudio.epname = this.data.walkmanPlay.epname;
+      innerAudio.singer = this.data.walkmanPlay.author;
+      innerAudio.coverImgUrl = this.data.walkmanPlay.poster;
+      innerAudio.onCanplay(() => {
+        // console.log('进入可以播放状态');
+        this.setData({
+          'walkmanPlay.time': this.convertTime(innerAudio.duration),
+          'walkmanPlay.current': this.convertTime(innerAudio.currentTime)
+        })
+      })
+      innerAudio.onPlay(() => {
+        // console.log('开始播放');
+        // console.log('as', innerAudio);
+        this.setData({
+          playicon: 'playing',
+          'walkmanPlay.time': this.convertTime(innerAudio.duration),
+          'walkmanPlay.current': this.convertTime(innerAudio.currentTime)
+        })
+      })
+      innerAudio.onTimeUpdate(() => {
+        // console.log('正在播放');
+        this.setData({
+          'walkmanPlay.time': this.convertTime(innerAudio.duration),
+          'walkmanPlay.current': this.convertTime(innerAudio.currentTime),
+          audioPress: Math.ceil(innerAudio.currentTime / innerAudio.duration * 100)
+        })
+      })
+      innerAudio.onPause(() => {
+        // console.log('暂停播放');
+        this.setData({
+          playicon: 'play'
+        })
+      })
+      innerAudio.onStop(() => {
+        // console.log('停止播放');
+        this.setData({
+          playicon: 'play',
+          walkmanState: 'none'
+        })
+        //停止播放，销毁该实例
+        // innerAudio.destroy();
+      })
+      innerAudio.onEnded(() => {
+        console.log('录音播放结束');
+        this.setData({
+          playicon: 'play'
+        });
+        //播放结束，销毁该实例
+        // innerAudio.destroy();
+      })
+
+      innerAudio.onError((res) => {
+        console.log('err', res.errMsg, res.errCode);
+        // innerAudio.destroy();
+      })
+    },
+    // 随身听播放控制
+    iconPlay: function () {
+      var innerAudio = wx.getBackgroundAudioManager(); 
+      if (this.data.playicon == "play") {
+        innerAudio.play();
+      } else {
+        innerAudio.pause();
+      }
+    },
+    // 关闭停止随身听
+    iconStop: function () {
+      var innerAudio = wx.getBackgroundAudioManager(); 
+      innerAudio.stop();
+    },
+    toSearch: function () {
+      wx.navigateTo({
+        url: '../search/search',
+      })
+    },
+    convertTime: function (a) {
+      var second = Math.floor(a % 60); //计算秒
+      var minite = Math.floor((a / 60) % 60); //计算分
+      var hour = Math.floor((a / 3600) % 24); //计算小时
+      var day = Math.floor((a / 3600) / 24);
+      var str = '';
+      if (day) {
+        day = day.toString() + ':';
+      } else {
+        day = '';
+      }
+      if (hour) {
+        hour = hour.toString() + ':';
+      } else if (day) {
+        hour = '0:';
+      } else {
+        hour = '';
+      }
+      if (minite) {
+        minite = minite.toString() + ':';
+      } else {
+        minite = '0:';
+      }
+      if (second) {
+        second = second.toString();
+      } else {
+        second = '0';
+      }
+      str = day + hour + minite + second;
+      return str;
+    }
+  }
+})

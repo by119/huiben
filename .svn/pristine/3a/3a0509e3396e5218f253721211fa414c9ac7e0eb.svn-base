@@ -1,0 +1,5 @@
+<!--components/list-null.wxml-->
+<view class="list-null">
+  <image mode='aspectFill' src="/images/null.png"></image>
+  <text>暂时木有内容啊~</text>
+</view>

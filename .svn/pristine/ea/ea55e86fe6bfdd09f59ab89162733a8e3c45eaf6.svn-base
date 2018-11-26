@@ -1,0 +1,91 @@
+/* components/music-ctrl/music-ctrl.wxss */
+@font-face {
+  font-family: 'iconfont';  /* project id 800390 */
+  src: url('//at.alicdn.com/t/font_800390_25r91s72iue.eot');
+  src: url('//at.alicdn.com/t/font_800390_25r91s72iue.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_800390_25r91s72iue.woff') format('woff'),
+  url('//at.alicdn.com/t/font_800390_25r91s72iue.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_800390_25r91s72iue.svg#iconfont') format('svg');
+}
+.iconfont {
+ font-family:"iconfont" !important;
+ font-size:60rpx;
+ font-style:normal;
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+}
+
+/* 随身听 */
+.icon-off:before{content: '\e602';} /* 关闭  */
+.icon-play:before{content: '\e731';}
+.icon-playing:before{content: '\e618';}
+
+/* 音乐播放 */
+
+.music-ctrl {
+  position: fixed;
+  bottom: 2vh;
+  left: 50%;
+  transform: translate(-50%);
+  width: 95%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 15rpx;
+  height: 100rpx;
+}
+
+.icon-off {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 30rpx;
+  color: #fff;
+  font-size: 40rpx;
+  line-height: 85rpx;
+}
+
+.poster {
+  position: absolute;
+  left: 100rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  vertical-align: middle;
+  width: 85rpx;
+  height: 85rpx;
+  border-radius: 50%;
+}
+
+.play-info {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 200rpx;
+  display: inline-block;
+  padding: 0 20rpx;
+  line-height: 30rpx;
+  color: #fff;
+}
+
+.play-name, .play-author {
+  font-size: 26rpx;
+  margin-right: 20rpx;
+}
+
+.play-time {
+  font-size: 24rpx;
+}
+
+progress {
+  width: 200rpx;
+  float: right;
+  margin: 20rpx 0 0 20rpx;
+}
+
+.music-state {
+  position: absolute;
+  right: 30rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 48rpx;
+  line-height: 85rpx;
+}

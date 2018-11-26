@@ -1,0 +1,279 @@
+// pages/picturebook/picturebook.js
+let AppMusic = wx.getBackgroundAudioManager();
+const Trequest = require('../../static/js/request.js');
+var timer = null;
+var n = getApp(),
+  pe = require("../../wxParse/wxParse.js");
+Page({
+  data: {
+    indicatorDots: false,
+    circular: false,
+    autoplay: false,
+    playicon: 'play',
+    prevGrey: '',
+    nextGrey: '',
+    bookData: [],
+    count: 1,
+    current: 0,
+    canPlay: 1,
+    intervalTime: 5000, //页面切换的时长
+    sliding: !1 //是否在滑动中
+  },
+  onLoad: function(options) {
+    // console.log(options.gi_id,'book-id');
+    // 绘本的学习页面   goods_item_segment/ getlist gi_id= 课时的ID
+    // 会返回当前绘本下的所有页面    
+    var that = this;
+    Trequest({
+      url: 'goods_item_segment/getlist',
+      data: {
+        gi_id: options.gi_id
+      },
+      callback(res) {
+        that.setData({
+          bookData: res.data.data
+        })
+        var bookLen = that.data.bookData.length;
+        that.setData({
+          count: bookLen
+        })
+        if (that.data.current < 1) {
+          that.setData({
+            prevGrey: 'grey'
+          })
+        } else {
+          that.setData({
+            prevGrey: ''
+          })
+        }
+        if (that.data.current >= bookLen - 1) {
+          that.setData({
+            nextGrey: 'grey'
+          })
+        } else {
+          that.setData({
+            nextGrey: ''
+          })
+        }
+        pe.wxParse("content", "html", res.data.data[0].content, that, 5);
+        // 进入自动播放
+        // that.iconPlay();
+        // that.setData({
+        //   canPlay: 0
+        // })
+      }
+    });
+  },
+  onUnload: function() {
+    // 关闭音频
+    // AppMusic.stop();
+    // 暂停音频
+    // AppMusic.pause();
+  },
+  prevFn: function() {
+    // console.log('上一张')
+    let that = this;
+    if (!this.data.sliding) {
+      this.setData({
+        sliding: !0
+      })
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        that.setData({
+          sliding: !1
+        })
+      }, 1000);
+      if (this.data.current > 0) {
+        this.setData({
+          current: this.data.current - 1
+        })
+      }
+    }
+  },
+  nextFn: function() {
+    // console.log('下一张');
+    let that = this;
+    if (!this.data.sliding) {
+      this.setData({
+        sliding: !0
+      })
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        that.setData({
+          sliding: !1
+        })
+      }, 1000);
+      if (this.data.current < this.data.bookData.length - 1) {
+        this.setData({
+          current: this.data.current + 1
+        })
+      }
+    }
+  },
+  changeAutoplay: function(e) {
+    if (this.data.playicon == "play") {
+      // AppMusic.play();
+      this.setData({
+        playicon: 'playing'
+      })
+    } else {
+      // AppMusic.pause();
+      this.setData({
+        playicon: 'play'
+      })
+    }
+    this.setData({
+      autoplay: !this.data.autoplay
+    })
+    if (this.data.canPlay) {
+      this.iconPlay();
+      this.setData({
+        canPlay: 0
+      })
+    }
+  },
+  stopTouchMove: function() {
+    return false;
+  },
+  changeCurrent: function(e) {
+    var that = this;
+    // if (!this.data.sliding) {
+    //   this.setData({
+    //     sliding: !0
+    //   })
+    //   clearTimeout(timer);
+    //   timer = setTimeout(function() {
+    //     that.setData({
+    //       sliding: !1
+    //     })
+    //   }, 1000);
+    this.setData({
+      current: e.detail.current
+    })
+    if (this.data.current < 1) {
+      this.setData({
+        prevGrey: 'grey'
+      })
+    } else {
+      this.setData({
+        prevGrey: ''
+      })
+    }
+    if (this.data.current >= this.data.bookData.length - 1) {
+      this.setData({
+        nextGrey: 'grey',
+        autoplay: false,
+        playicon: 'play'
+      })
+    } else {
+      this.setData({
+        nextGrey: ''
+      })
+    }
+    pe.wxParse("content", "html", this.data.bookData[this.data.current].content, this, 5);
+    this.iconPlay();
+    this.setData({
+      canPlay: 0
+    })
+    // }
+  },
+  setContent: function() {
+    this.setData({
+      wxContent: this.bookData[this.data.current].content
+    })
+    pe.wxParse("content", "html", this.data.wxContent, this, 5);
+  },
+  // 播放音频
+  iconPlay: function() {
+    this.createAudio();
+    AppMusic.play();
+  },
+  //设置播放音频
+  createAudio: function() {
+    AppMusic.title = this.data.bookData[this.data.current].title;
+    AppMusic.coverImgUrl = this.data.bookData[this.data.current].pic_url;
+    AppMusic.src = this.data.bookData[this.data.current].radio_url // 设置了 src 之后会自动播放
+    // console.log(this.data.bookData[this.data.current].title, 'title')
+    AppMusic.onCanplay(() => {
+      // console.log('进入可以播放状态');
+      let time = Math.ceil(AppMusic.duration * 1000);
+      this.setData({
+        intervalTime: 10000000
+      })
+    })
+    AppMusic.onPlay(() => {
+      // console.log('开始播放');
+    })
+    AppMusic.onTimeUpdate(() => {
+      // console.log('正在播放');      
+    })
+    AppMusic.onPause(() => {
+      // console.log('暂停播放');
+    })
+    AppMusic.onStop(() => {
+      // console.log('停止播放');
+    })
+    AppMusic.onEnded(() => {
+      // console.log('音频播放结束');
+      if (this.data.autoplay) {
+        this.setData({
+          intervalTime: 1000
+        })
+      } else {
+        this.setData({
+          intervalTime: 10000000,
+          canPlay: 1,
+        })
+      }
+    })
+    AppMusic.onError((res) => {
+      // console.log(res.errMsg);
+      // console.log(res.errCode);
+      // wx.showToast({
+      //   title: res.errMsg,
+      //   icon: 'none'
+      // });
+    })
+
+    AppMusic.onPrev(() => {
+      // console.log('点击了上一首')
+      let that = this;
+      if (!this.data.sliding) {
+        this.setData({
+          sliding: !0
+        })
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+          that.setData({
+            sliding: !1
+          })
+        }, 1000);
+        if (this.data.current > 0) {
+          this.setData({
+            current: this.data.current - 1
+          })
+        }
+      }
+    })
+    AppMusic.onNext(() => {
+      // console.log('点击了下一首')
+      let that = this;
+      if (!this.data.sliding) {
+        this.setData({
+          sliding: !0
+        })
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+          that.setData({
+            sliding: !1
+          })
+        }, 1000);
+        if (this.data.current < this.data.bookData.length - 1) {
+          this.setData({
+            current: this.data.current + 1
+          })
+        }
+      }
+    })
+  },
+})

@@ -1,0 +1,106 @@
+/* pages/tape.wxss */
+
+.tape {
+  /* position: fixed */
+}
+
+.tape-top {
+  position: relative;
+}
+
+.tape-top image {
+  width: 100%;
+}
+
+.icon-horn {
+  position: absolute;
+  bottom: 30rpx;
+  right: 30rpx;
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 40rpx;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
+.horn-css {
+  background-color: rgba(230, 71, 49, 0.5);
+}
+
+/* 英文内容  */
+
+.content {
+  width: 690rpx;
+  position: absolute;
+  bottom: 0;
+  padding: 30rpx;
+  color: #fff;
+  font-size: 40rpx;
+  line-height: 50rpx;
+}
+
+/* 内容  */
+
+.translate {
+  border-left: 2px solid #e64731;
+  padding: 30rpx;
+  font-size: 32rpx;
+  line-height: 40rpx;
+  color: #666;
+}
+
+/* 换一组  */
+
+.change-tape {
+  position: absolute;
+  right: 30rpx;
+  font-size: 32rpx;
+  line-height: 64rpx;
+  color: #e64731;
+}
+
+.change-tape icon {
+  color: #e64731;
+  font-size: 32rpx;
+}
+
+/* 录音功能块  */
+
+.tape-content {
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.rerecord {
+  position: absolute;
+  left: 20%;
+  top: 48%;
+  font-size: 36rpx;
+  color: #333;
+}
+
+.tape-btn {
+  background-color: #e64731;
+  color: #fff;
+  width: 150rpx;
+  height: 150rpx;
+  line-height: 150rpx;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 80rpx;
+  margin: 50rpx 0 20rpx;
+}
+
+.tape-css {
+  background-color: rgba(230, 71, 49, 0.5);
+  font-size: 60rpx;
+}
+
+.tape-txt {
+  text-align: center;
+  font-size: 32rpx;
+  color: #666;
+}

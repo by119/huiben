@@ -1,0 +1,46 @@
+// pages/share-code/share-code.js
+const Trequest = require('../../static/js/request.js');
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    codeImg: ''
+  },
+
+  onShow: function() {
+    var userInfo = wx.getStorageSync('user_info').data || '';
+    if (!userInfo) {
+      wx.redirectTo({
+        url: "/pages/login/login?pageAs=code"
+      });
+      return false;
+    } else {
+      this.setData({
+        userInfo: userInfo
+      })
+    }
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+    var that = this;
+    // 获取二维码
+    Trequest({
+      url: 'wechat/qrcode',
+      data: {},
+      callback(res) {
+        that.setData({
+          codeImg: res.data
+        })
+      }
+    });
+  },
+  saveImg: function() {
+    wx.previewImage({
+      urls: [this.data.codeImg] // 需要预览的图片http链接列表
+    })
+  }
+})

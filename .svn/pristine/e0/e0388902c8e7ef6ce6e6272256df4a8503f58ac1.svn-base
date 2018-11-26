@@ -1,0 +1,31 @@
+<view class='mine-share container'>
+  <view class='share-head'>
+    <view class='mine-info clearfix'>
+      <image mode='aspectFill' class='mine-avatar' src='{{userInfo.avatar}}'></image>
+      <view class='mine-txt'>
+        <block wx:if="{{userInfo.parentUser}}">
+          <text class='mine-name'>{{userInfo.nickname}}</text>
+          <text class='mine-referee'>推荐人：{{userInfo.parentUser.nickname}}</text>
+        </block>
+        <block wx:else>
+          <text class='mine-name-big'>{{userInfo.nickname}}</text>
+        </block>
+      </view>
+    </view>
+    <view class='mine-txt mine-cash clearfix'>
+      <text>可提现佣金</text>
+      <text>{{userInfo.money}}</text>
+      <button class='withdraw' bindtap='withdrawFn'>提现</button>
+    </view>
+  </view>
+  <view class='tools'>
+    <navigator url='/pages/share-code/share-code' class='tool'>
+      <text>推广二维码</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </navigator>
+    <navigator class='tool' url='../share-record/share-record'>
+      <text>推广记录</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </navigator>
+  </view>
+</view>

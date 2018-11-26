@@ -1,0 +1,28 @@
+<view class='mine-share container'>
+  <view class='share-head'>
+    <view class='mine-info clearfix'>
+      <image mode='aspectFill' class='mine-avatar' src='{{info.img}}'></image>
+      <view class='mine-txt'>
+        <text class='mine-name'>{{info.name}}</text>
+        <text class='mine-referee'>推荐人：{{info.referee}}</text>
+      </view>
+    </view>
+    <view class='mine-txt mine-cash clearfix'>
+      <text>可提现佣金</text>
+      <text>{{info.mineCash}}</text>
+      <button class='withdraw'>提现</button>
+    </view>
+  </view>
+  <view class='tools'>
+    <poster config="{{posterConfig}}" bind:success="onPosterSuccess" bind:fail="onPosterFail">
+      <view class='tool'>
+        <text>推广二维码</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+      </view>
+    </poster>
+    <navigator class='tool' url='../share-record/share-record'>
+      <text>推广记录</text>
+      <icon class="iconfont icon-more tool-more"></icon>
+    </navigator>
+  </view>
+</view>

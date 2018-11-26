@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "推荐",
+  "usingComponents": {
+    "music-ctrl": "/components/music-ctrl/music-ctrl"
+  }
+}

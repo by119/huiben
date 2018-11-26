@@ -1,0 +1,122 @@
+// pages/search/search.js
+const Trequest = require('../../static/js/request.js');
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    searchState: 'block',
+    seachVal: '',
+    pageUrl: '/pages/lists/lists',
+    historyLists: [],
+    hotLists: []
+  },
+  onShow:function(){
+    // 获取搜索历史
+    var _search_list = wx.getStorageSync('search_list'),
+      arr = [];
+    if (_search_list) {
+      for (let i in _search_list) {
+        arr.push(_search_list[i]);
+      }
+      this.setData({
+        historyLists: arr
+      })
+      wx.setStorageSync('search_list', arr);
+    }
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+    var that = this;
+    // 热门搜索 User_search_log/getlist  is_hot = 1
+    Trequest({
+      url: 'user_search_log/getlist',
+      data: {
+        is_hot: 1
+      },
+      callback(res) {
+        that.setData({
+          hotLists: res.data.data
+        })
+      }
+    });
+  },
+  distinct: function (a) {
+    // 数组去重
+    var arr = a,
+      i,
+      j,
+      len = arr.length;
+    for (i = 0; i < len; i++) {
+      for (j = i + 1; j < len; j++) {
+        if (arr[i] == arr[j]) {
+          arr.splice(j, 1);
+          len--;
+          j--;
+        }
+      }
+    }
+    return arr;
+  },
+  searchEnt: function(e) {
+    var val = e.detail.value.trim();
+    if(val==''){
+      this.setData({
+        seachVal:''
+      })
+      return false;
+    }
+    this.setData({
+      seachVal: '',
+      pageUrl: '/pages/lists/lists?title=' + val
+    })
+    wx.navigateTo({
+      url: this.data.pageUrl
+    })
+    Trequest({
+      url: 'user_search_log/add',
+      data: {
+        keyword: val
+      },
+      callback(res) {}
+    });
+    var _search_list = wx.getStorageSync('search_list'),
+      arr = [];
+    if (_search_list) {
+      for (let i in _search_list) {
+        arr.push(_search_list[i])
+      }
+    }
+    arr.unshift(e.detail.value);
+    arr = this.distinct(arr);
+    this.setData({
+      historyLists: arr
+    })
+    wx.setStorageSync('search_list', arr);
+  },
+  //搜索框搜索图标显隐
+  searchStateFn: function(options) {
+    if (options.detail.value) {
+      this.setData({
+        searchState: 'none'
+      })
+    } else {
+      this.setData({
+        searchState: 'block'
+      })
+    }
+  },
+  cancel: function() {
+    wx.navigateBack();
+  },
+  delHistory: function() {
+    wx.setStorageSync('search_list', '');
+    this.setData({
+      historyLists: ''
+    })
+  }
+
+})

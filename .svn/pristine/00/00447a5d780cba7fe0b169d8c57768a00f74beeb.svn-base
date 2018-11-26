@@ -1,0 +1,63 @@
+var app = getApp()
+const Trequest = require('../../static/js/request.js')
+Page({
+  data: {
+    currentTab: 0,
+    dynamicData: [{
+      img: '/images/demo.png',
+      title: '5招让你轻松学英语',
+      explain: '2020年',
+      time: '07-22 17:06'
+    }, {
+      img: '/images/demo.png',
+      title: '5招让你轻松学英语',
+      explain: '高效率学习，玩转英语不是梦',
+      time: '07-22 17:06'
+    }, {
+      img: '/images/demo.png',
+      title: '5招让你轻松学英语',
+      explain: '高效率学习，玩转英语不是梦',
+      time: '07-22 17:06'
+    }, {
+      img: '/images/demo.png',
+      title: '5招让你轻松学英语',
+      explain: '高效率学习，玩转英语不是梦',
+      time: '07-22 17:06'
+    }, {
+      img: '/images/demo.png',
+      title: '5招让你轻松学英语',
+      explain: '高效率学习，玩转英语不是梦',
+      time: '07-22 17:06'
+    }]
+  },
+  onLoad: function (options) {
+    // 页面初始化 options为页面跳转所带来的参数
+    var that = this;
+    Trequest({
+      url: '',
+      data: {},
+      callback(res) {
+        console.log(res);
+      }
+
+    });
+  },
+  //滑动切换
+  swiperTab: function (e) {
+    var that = this;
+    that.setData({
+      currentTab: e.detail.current
+    });
+  },
+  //点击切换
+  clickTab: function (e) {
+    var that = this;
+    if (this.data.currentTab === e.target.dataset.current) {
+      return false;
+    } else {
+      that.setData({
+        currentTab: e.target.dataset.current
+      })
+    }
+  }
+})

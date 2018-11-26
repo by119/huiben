@@ -1,0 +1,140 @@
+<!--pages/video/video.wxml-->
+<import src="../../wxParse/wxParse.wxml"></import>
+<view class='video container'>
+  <view>
+    <block wx:if="{{videoSrc}}">
+      <video id="myVideo" src="{{videoSrc}}" page-gesture="true" bindplay="playFn" binderror="errFn">
+        <cover-view class='video-detail' style='display:{{videoDetail}}'>
+          <cover-image wx:for="{{avatar}}" wx:key="{{index}}" mode="aspectFill" class='avatar' src='{{item.user.avatar}}' style='z-index:{{avatarLen-index}}'></cover-image>
+          <cover-image mode='widthFix' class='icon-our-img' src='/images/icon-our.png'></cover-image>
+          <cover-view style='float: left;'>{{videoCount}}次学习</cover-view>
+        </cover-view>
+        <!-- <cover-view class='speed'>
+          <cover-view style='display:inline-block'>倍速：</cover-view>
+          <cover-view class='num' data-speed="{{speed}}" bindtap="SpeedUp">×{{speed}}</cover-view>
+        </cover-view> -->
+      </video>
+    </block>
+    <block wx:else>
+      <view>
+        <image class='cover-img' mode='widthFix' style='width:750rpx;' src='{{coverImgUrl}}'>
+          <view class='video-detail img-detail' style='display:{{videoDetail}}'>
+            <image wx:for="{{avatar}}" wx:key="{{index}}" mode="aspectFill" class='avatar' src='{{item.user.avatar}}' style='z-index:{{avatarLen-index}}'></image>
+            <!-- <image mode='widthFix' class='icon-our' src='/images/png'></image> -->
+            <icon class='iconfont icon-our'></icon>
+            <view class='icon-txt'>{{videoCount}}次学习</view>
+          </view>
+        </image>
+      </view>
+    </block>
+  </view>
+  <view class='video-info'>
+    <view class='video-title'>
+      <text>{{title}}</text>
+      <view bindtap='followFn' class='follow' wx:if="{{follow}}">已收藏</view>
+      <view bindtap='followFn' class='follow' wx:else> ＋收藏 </view>
+    </view>
+    <view class='lesson-count'>
+      <text>共{{goodsItem.length}}节课</text>
+    </view>
+    <!-- 倍速  -->
+    <view class='speed-box clearfix' wx:if="{{videoSrc}}">
+      <view class='speed-reduce' data-speed="{{speed}}" bindtap="SpeedDown">
+        <icon data-speed="{{speed}}" class='iconfont icon-reduce'></icon>
+        <text data-speed="{{speed}}">慢播放</text>
+      </view>
+      <view class='speed'>
+        <view style='display:inline-block'>当前倍速：</view>
+        <view class='num' style='display:inline-block' data-speed="{{speed}}">×{{speed}}</view>
+      </view>
+      <view class='speed-add' data-speed="{{speed}}" bindtap="SpeedUp">
+        <text data-speed="{{speed}}">快播放</text>
+        <icon data-speed="{{speed}}" class='iconfont icon-add'></icon>
+      </view>
+    </view>
+
+    <!-- 音频  -->
+    <view class='speed-box clearfix' wx:if="{{isAudio}}">
+      <view class='progress-title'>{{walkmanPlay.title}}</view>
+      <view class='progress-box'>
+        <text style='float:left'>{{walkmanPlay.current}}</text>
+        <progress percent="{{walkmanPlay.audioPress}}" stroke-width="1" />
+        <text style='float:right'>{{walkmanPlay.time}}</text>
+      </view>
+      <view class='progress-icon'>
+        <icon class='iconfont icon-prev' data-index='{{prevIndex}}' data-current="{{currentIndex}}" bindtap='playPrev'></icon>
+        <icon class='iconfont icon-audio-{{walkmanPlay.playicon}}' bindtap='_iconPlay'></icon>
+        <icon class='iconfont icon-next' data-index='{{nextIndex}}' data-current="{{currentIndex}}" bindtap='playNext'></icon>
+      </view>
+    </view>
+    <!-- <view class='price-info' wx:if="{{nowPrice}}">
+      <text class='price-tip'>特价优惠</text>
+      <text class='now-price'>￥{{nowPrice}}</text>
+      <text class='price'>原价：￥{{price}}</text>
+    </view>
+    <view class='price-info' wx:else>
+      <text class='price'>原价:￥{{price}}</text>
+    </view>  -->
+  </view>
+  <view class='privilege'>
+    <icon class='iconfont icon-loop'></icon>
+    <text>永久回听</text>
+    <icon class='iconfont icon-discount'></icon>
+    <text>支持优惠</text>
+    <icon class='iconfont icon-end'></icon>
+    <text>更新完结</text>
+  </view>
+  <view>
+    <view class="swiper-tab">
+      <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">详情</view>
+      <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">课程</view>
+    </view>
+    <swiper current="{{currentTab}}" duration="300" bindchange="swiperTab">
+      <swiper-item>
+        <scroll-view class='scroll' scroll-y="true">
+          <view style="background: #fff;">
+            <template is="wxParse" data="{{wxParseData:content.nodes}}"></template>
+          </view>
+        </scroll-view>
+      </swiper-item>
+      <swiper-item>
+        <scroll-view class='scroll' scroll-y="true">
+          <view class='lesson'>
+            <view class='lesson-head'>课程列表</view>
+            <!-- <view class='lesson-list' wx:for="{{goodsItem}}" wx:key="{{index}}" data-video="{{item.video_url}}" data-coverimgurl="{{coverImgUrl}}" data-title="{{item.title}}" data-src="{{item.radio_url}}" bindtap='palyMusic' data-subject="{{subjectId}}" data-free="{{item.is_free}}"
+              data-goodsid='{{item.id}}' data-index="{{index}}" data-current="{{index}}"> -->
+            <view class='lesson-list' wx:for="{{goodsItem}}" wx:key="{{index}}" bindtap='palyMusic' data-current="{{index}}">
+              <view class='lesson-title'>{{item.title}}</view>
+              <view class='lesson-intro'>
+                <text>{{item.create_time}}</text>
+                <block wx:if="{{item.is_free}}">
+                  <text class="duditions">免费</text>
+                </block>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <view class='music-box'>
+     <!-- <music-ctrl walkmanState="{{walkmanPlay.walkmanState}}" coverImgUrl="{{coverImgUrl}}" title="{{walkmanPlay.title}}" current="{{walkmanPlay.current}}" time="{{walkmanPlay.time}}" playicon="{{walkmanPlay.playicon}}" audioPress="{{walkmanPlay.audioPress}}"
+      bind:iconStop="_iconStop" bind:iconPlay="_iconPlay" bottom="10"></music-ctrl>  -->
+  </view>
+  <view class='video-foot'>
+    <block wx:if="{{!collection_free}}">
+      <button class='share-btn' open-type='share'>
+        <icon class='iconfont icon-share2'></icon>
+        <text>分享</text>
+      </button>
+      <navigator url='/pages/mine-vip/mine-vip'>
+        <view class='buy'>加入会员</view>
+      </navigator>
+    </block>
+    <block wx:else>
+      <button class='share-free' open-type='share'>
+        分享好友
+      </button>
+    </block>
+  </view>
+</view>

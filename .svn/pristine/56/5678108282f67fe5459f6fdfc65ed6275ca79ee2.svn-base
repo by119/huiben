@@ -1,0 +1,228 @@
+const Trequest = require('../../static/js/request.js')
+Page({
+  data: {
+    pageUrl: '/pages/video/video',
+    collectData: [],
+    collectData2: [],
+    collectData3: [],
+    collectData4: [],
+    bgImg: '',
+    params: {}, //请求列表的参数
+    gc_id: null,
+    subject_id: null,
+    more: false,
+    numPerPage: 10, //设置默认一次加载数据条数
+    pageNum: 1, // 设置加载的第几次，默认是第一次
+    hasMore: true, // “加载更多”
+    ifLoad: false,
+    total: 0, // regardData数组（最近学习记录）的条数
+    isEnglish: false,
+    scrollTop: 0
+  },
+  onLoad: function(options) {
+    console.log(options, 'wewe');
+    if (options.more) {
+      this.setData({
+        more: options.more
+      })
+    }
+    if (options.title) {
+      params = {
+        title: options.title
+      };
+      wx.setNavigationBarTitle({
+        title: options.title
+      })
+    } else {
+      wx.setNavigationBarTitle({
+        title: '课程列表'
+      })
+    }
+    var params = {};
+    var that = this;
+
+    if (options.category_id == 4) {
+      // category_id = 4 英文阅读
+      wx.setNavigationBarTitle({
+        title: '英文阅读'
+      })
+      that.setData({
+        isEnglish: true
+      })
+    }
+    if (options.subject_id) {
+      // 列表接口   subject_id：视听读列表    title：搜索    gc_id：固定课程
+      // 视频学习 subject_id=2
+      // 音频学习 subject_id=3
+      // 绘本学习 subject_id=4
+      that.setData({
+        subject_id: options.subject_id
+      })
+      params.subject_id = options.subject_id;
+    }
+    if (options.gc_id) {
+      that.setData({
+        gc_id: options.gc_id
+      })
+      params.gc_id = options.gc_id;
+      //少儿  gc_id=2   type 6
+      if (options.gc_id == 2) {
+        Trequest({
+          url: 'adv/getlist',
+          data: {
+            type: '6',
+            classified: 1
+          },
+          callback(res) {
+            that.setData({
+              bgImg: res.data['6'][0].pic_url
+            })
+          }
+        });
+      }
+    }
+    that.setData({
+      params: params
+    })
+    that.data.isEnglish ? that.englishList(params) : that.lessonList(params);
+  },
+  englishList: function(temp) {
+    temp.category_id = 4;
+    temp.p = this.data.pageNum;
+    temp.numPerPage = this.data.numPerPage;
+    var that = this,
+      ifLoad = false,
+      arr1 = that.data.collectData,
+      arr2 = [];
+    Trequest({
+      url: 'article/getlist',
+      data: temp,
+      callback(res) {
+        // let englishData = res.data.data;
+        arr2 = res.data.data;
+        that.setData({
+          collectData: arr1.concat(arr2),
+          total: res.data.total,
+          pageUrl: '/pages/english/english'
+        })
+        let page = that.data.pageNum,
+          a = that.data.total / that.data.numPerPage;
+        if (page < a) {
+          ifLoad = true;
+        } else {
+          ifLoad = false;
+        }
+        that.setData({
+          ifLoad: ifLoad
+        })
+      }
+    });
+  },
+  lessonList: function(temp) {
+    temp.no_item = 1;
+    temp.p = this.data.pageNum;
+    temp.numPerPage = this.data.numPerPage;
+    var that = this,
+      ifLoad = false,
+      arr1 = that.data.collectData,
+      arr2 = [],
+      arr3 = [],
+      l2 = [],
+      l3 = [],
+      l4 = [];
+    // 列表接口   subject_id：视听读列表    title：搜索    gc_id：固定课程
+    Trequest({
+      url: 'goods/getlist',
+      data: temp,
+      callback(res) {
+        arr2 = res.data.data;
+        arr3 = arr1.concat(arr2);
+        for (var i = 0; i < arr3.length; i++) {
+          if (arr3[i].subject_id == 2 && l2.length < 5) {
+            l2.push(arr3[i]);
+          }
+          if (arr3[i].subject_id == 3 && l3.length < 5) {
+            l3.push(arr3[i]);
+          }
+          if (arr3[i].subject_id == 4 && l4.length < 5) {
+            l4.push(arr3[i]);
+          }
+        }
+        that.setData({
+          collectData: arr3,
+          collectData2: l2,
+          collectData3: l3,
+          collectData4: l4,
+          total: res.data.total
+        })
+        let page = that.data.pageNum,
+          a = that.data.total / that.data.numPerPage;
+        if (page < a) {
+          ifLoad = true;
+        } else {
+          ifLoad = false;
+        }
+        that.setData({
+          ifLoad: ifLoad
+        })
+      }
+    });
+  },
+  // 上拉加载
+  onReachBottom: function() {
+    let that = this,
+      ifLoad = this.data.ifLoad,
+      params = this.data.params,
+      page = this.data.pageNum,
+      a = this.data.total / this.data.numPerPage;
+    if (ifLoad == true) {
+      if (page < a) {
+        page++;
+        that.setData({
+          hasMore: true,
+          numPerPage: that.data.numPerPage,
+          pageNum: page
+        })
+        that.data.isEnglish ? that.englishList(params) : that.lessonList(params);
+      } else {
+        that.setData({
+          hasMore: false,
+          ifLoad: false
+        })
+      }
+    } else {
+      that.setData({
+        hasMore: false,
+        ifLoad: false
+      })
+    }
+  },
+  //回到顶部
+  goTop: function(e) { // 一键回到顶部
+    if (wx.pageScrollTo) {
+      wx.pageScrollTo({
+        scrollTop: 0
+      })
+      this.setData({
+        scrollTop: 0
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+      })
+    }
+  },
+  scroll: function(e, res) {
+    // 容器滚动时将此时的滚动距离赋值给 this.data.scrollTop
+    if (e.detail.scrollTop > 100) {
+      this.setData({
+        floorstatus: true
+      });
+    } else {
+      this.setData({
+        floorstatus: false
+      });
+    }
+  }
+})

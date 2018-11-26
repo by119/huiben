@@ -1,0 +1,92 @@
+// pages/picturebook/picturebook.js
+Page({
+  data: {
+    indicatorDots: false,
+    autoplay: false,
+    prevGrey: '',
+    nextGrey: '',
+    bookData: [{
+      imgUrls: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+      nodeStr: '<p>A:How do you want it ?</p><p> A:你要理收入那么发式?</p><p>B:How do you want it?</p>'
+    } , {
+      imgUrls: 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+      nodeStr: '<p>A:How do you want it ?</p><p>B:How do you want it?</p>'
+    }, {
+      imgUrls: 'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg',
+      nodeStr: '<p>A:How do you want it ?</p><p> A:你要理收入那么发式?</p>'
+    }
+    ],
+    count: 1,
+    current:0,
+  },
+  onLoad: function (options){
+    console.log(options.gc_id,'book-id');
+    var bookLen = this.data.bookData.length;
+    this.setData({
+      count: bookLen
+    })
+    if (this.data.current < 1) {
+      this.setData({
+        prevGrey: 'grey'
+      })
+    } else {
+      this.setData({
+        prevGrey: ''
+      })
+    }
+    if (this.data.current >= bookLen - 1) {
+      this.setData({
+        nextGrey: 'grey'
+      })
+    } else {
+      this.setData({
+        nextGrey: ''
+      })
+    }
+  },
+  prevFn: function () {
+    // console.log('上一张')
+    if (this.data.current>0){
+      this.setData({
+        current: this.data.current-1
+      })
+    }
+  },
+  nextFn: function () {
+    // console.log('下一张');
+    if (this.data.current < this.data.bookData.length-1) {
+      this.setData({
+        current: this.data.current + 1
+      })
+    }
+  },
+  changeAutoplay: function(e) {
+    this.setData({
+      autoplay: !this.data.autoplay
+    })
+  },
+  changeCurrent: function(e) {
+    var that = e;
+    this.setData({
+      current: that.detail.current
+    })
+    if (this.data.current < 1) {
+      this.setData({
+        prevGrey: 'grey'
+      })
+    } else {
+      this.setData({
+        prevGrey: ''
+      })
+    }
+    if (this.data.current >= this.data.bookData.length-1) {
+      this.setData({
+        nextGrey: 'grey'
+      })
+    } else {
+      this.setData({
+        nextGrey: ''
+      })
+    }
+  }
+})

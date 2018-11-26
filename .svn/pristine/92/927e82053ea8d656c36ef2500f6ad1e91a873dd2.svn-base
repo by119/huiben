@@ -1,0 +1,67 @@
+var e = require("../../static/js/request.js"), t = getApp();
+
+Page({
+    data: {},
+    onLoad: function(e) {
+        // t.pageOnLoad(this);
+    },
+    // onReady: function() {
+    //     t.pageOnReady(this);
+    // },
+    // onShow: function() {
+    //     t.pageOnShow(this);
+    // },
+    // onHide: function() {
+    //     t.pageOnHide(this);
+    // },
+    // onUnload: function() {
+    //     t.pageOnUnload(this);
+    // },
+    getUserInfo: function(t) {
+      console.log(t.detail);
+        //  "getUserInfo:ok" == t.detail.errMsg && (
+        //   wx.showLoading({
+        //       title: "正在登录",
+        //       mask: !0
+        //   }), 
+        wx.login({
+            success: function(o) {
+                var n = o.code;
+               wx.request({
+                 url: 'http://huiben.fengsh.cn/api/user/wechatLoginMiniProgram',
+                    method: "POST",
+                    data: {
+                        code: n,
+                        encryptedData: t.detail.encryptedData,
+                        iv: t.detail.iv,
+                        headimgurl: t.detail.userInfo.avatarUrl,
+                        nickname: t.detail.userInfo.nickName
+                    },
+                    success: function(e) {
+                      console.log('e',e)
+                      if (200 == e.statusCode) {
+                            wx.setStorageSync("access_token", e.data.access_token), wx.setStorageSync("user_info", e.data);
+                            // var t = wx.getStorageSync("login_pre_page");
+                            // t && t.route || wx.redirectTo({
+                            //     url: "/pages/suggest/suggest"
+                            // });
+                            wx.switchTab({
+                              url: "/pages/suggest/suggest"
+                            });
+                            // var o = 0;
+                            // (o = t.options && t.options.user_id ? t.options.user_id : t.options && t.options.scene ? t.options.scene : wx.getStorageSync("parent_id")) && 0 != o && getApp().bindParent({
+                            //     parent_id: o
+                            // }), wx.redirectTo({
+                            //     url: "/" + t.route + "?" + getApp().utils.objectToUrlParams(t.options)
+                            // });
+                        } 
+                    },
+                    complete: function() {
+                        wx.hideLoading();
+                    }
+                });
+            },
+            fail: function(e) {}
+        });
+    }
+});
